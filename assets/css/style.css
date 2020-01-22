@@ -1,0 +1,85 @@
+.navbar {
+    background-color: #fff !important;
+    width: 100% !important;
+    box-shadow: 1px 1px 1px 1px lightgray;
+}
+
+.jumbotron {
+    width: 100% !important;
+    height: 100% !important;
+    margin-top: 20px;
+    background: url('../images/hendrik-cornelissen--qrcOR33ErA-unsplash.jpg') no-repeat center center;
+    background-size: cover;
+    padding-top: 20%;
+    padding-bottom: 20%;
+    color: white;
+    border-radius: 6px !important;
+    box-shadow: 1px 1px 1px 1px lightgray;
+}
+
+.main-container {
+    margin: 0px 20px 0px 20px;
+}
+
+.display-4 {
+    font-weight: 9000;
+}
+
+.btn {
+    margin: 0px 17px 0px 0px;
+    background-color: tomato !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 1px 1px 1px 1px lightgray;
+}
+
+form {
+    margin-top: 10px;
+}
+
+#states {
+    margin-left: 350px;
+}
+
+#state {
+    box-shadow: 1px 1px 1px 1px lightgray;
+}
+
+#picker {
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+footer {
+    margin-top: 100px;
+    border-top: 2px solid tomato;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    clear: both;
+    position: fixed;
+    box-shadow: 0px 0px 0px 3px lightgray;
+}
+
+.form-group {
+    background-color: lightgrey;
+    padding: 30px 0px 30px 0px;
+    border-radius: 6px !important;
+    background: rgb(204, 204, 204);
+    background: rgba(204, 204, 204, 0.5);
+    margin-bottom: 100px;
+}
+
+.card-group {
+    margin: 15px 17px 100px 17px;
+}
+
+.card .card-body {
+    margin: 0px 10px 0px 10px;
+}
+
+hr {
+    background-color: tomato;
+    width: 70px;
+    margin-left: 0px;
+}
