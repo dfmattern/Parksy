@@ -1,5 +1,5 @@
 $("#state").on("change",function(){
     console.log("worked");
-    var something = $("#state").attr("id");
+    var something = $("#state").val();
     console.log(something);
 })
