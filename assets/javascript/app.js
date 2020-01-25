@@ -20,6 +20,7 @@ $(document).ready(function() {
     //database reference as variable
     let database = firebase.database();
     let stateCode = sessionStorage.getItem("stateCode");
+    let likeCounter = 0;
 
 
 
@@ -70,6 +71,18 @@ $(document).ready(function() {
 
         })
     });
+
+    //like function
+    $("#like-btn").on("click",function(event){
+        event.preventDefault();
+        likeCounter++;
+        database.ref().set({
+            likeCounter:likeCounter
+        })
+console.log(event);
+
+    });
+
     //where the webcam gets add to the page
     var webCam = "https://api.windy.com/api/webcams/v2/list/limit=50?show=webcams:location,image,player&key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
 
