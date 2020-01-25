@@ -1,6 +1,27 @@
 $(document).ready(function() {
   //console.log("ready");
 
+ 
+ //Initialize Firebase 
+  let firebaseConfig = {
+    apiKey: "AIzaSyA7jX5P7grrZlBwV0QW49UM6OtH9FnXh34",
+    authDomain: "parksy-acb97.firebaseapp.com",
+    databaseURL: "https://parksy-acb97.firebaseio.com",
+    projectId: "parksy-acb97",
+    storageBucket: "parksy-acb97.appspot.com",
+    messagingSenderId: "75415393545",
+    appId: "1:75415393545:web:4ccbdca33052f72300efd8",
+    measurementId: "G-GYSCKSGM5V"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+  //database reference as variable
+  let database = firebase.database
+
+
+
   
 
   $("#state").on("change", function() {
