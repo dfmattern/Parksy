@@ -21,9 +21,9 @@ $(document).ready(function() {
   let database = firebase.database
 
 
-  //navigate to new page based on state selction
+  //navigate to new page based on state selction !!!this needs fixed!!!
   $("#state").on("change", function(){
-    let newPage = $(this).url();
+    let newPage = $(this).val();
     if (newPage) {
       window.location = newPage;
     }
