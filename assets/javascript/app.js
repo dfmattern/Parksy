@@ -55,6 +55,7 @@ $(document).ready(function() {
             $(".card-text").text(cardText);
 
             //need to get different parks into each card
+            window.location.replace("stateselect.html");
 
 
 
