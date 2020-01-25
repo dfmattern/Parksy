@@ -15,17 +15,18 @@ $(document).ready(function() {
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
+    // firebase.analytics();
 
     //database reference as variable
     let database = firebase.database();
-    let stateCode;
+    let stateCode = sessionStorage.getItem("stateCode");
 
 
 
 
     $("#state").on("change", function() {
-        stateCode = $("#state").val();
+        sessionStorage.setItem("stateCode",$("#state").val());
+        stateCode = sessionStorage.getItem("stateCode");
         console.log(stateCode);
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
@@ -76,8 +77,9 @@ $(document).ready(function() {
         url:webCam,
         method: "GET"
     }).then(function (response){
+        console.log(response);
         var vid = response.result.webcams[0].id
-        $("#liveWebcam").attr("src","https://webcams.windy.com/webcams/public/embed/player/" + vid + "/day")
+        $("#liveWebcam").attr("src","https://webcams.windy.com/webcams/public/embed/player/" + vid + "/day");
     
         
     });
