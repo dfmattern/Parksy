@@ -15,18 +15,19 @@ $(document).ready(function() {
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
+    // firebase.analytics();
 
     //database reference as variable
-    let database = firebase.database
-
+    let database = firebase.database();
+    let stateCode = sessionStorage.getItem("stateCode");
 
 
 
 
     $("#state").on("change", function() {
-        let stateCode = $("#state").val();
-        //console.log(stateCode);
+        sessionStorage.setItem("stateCode",$("#state").val());
+        stateCode = sessionStorage.getItem("stateCode");
+        console.log(stateCode);
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
@@ -60,7 +61,6 @@ $(document).ready(function() {
 
 
 
-
             $(function() {
                 $("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
             });
@@ -70,4 +70,19 @@ $(document).ready(function() {
 
         })
     });
+    //where the webcam gets add to the page
+    var webCam = "https://api.windy.com/api/webcams/v2/list/limit=50?show=webcams:location,image,player&key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
+
+    $.ajax({
+        url:webCam,
+        method: "GET"
+    }).then(function (response){
+        console.log(response);
+        var vid = response.result.webcams[0].id
+        $("#liveWebcam").attr("src","https://webcams.windy.com/webcams/public/embed/player/" + vid + "/day");
+    
+        
+    });
+
+
 });
