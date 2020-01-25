@@ -21,6 +21,18 @@ $(document).ready(function() {
   let database = firebase.database
 
 
+  //navigate to new page based on state selction
+  $("#state").on("change", function(){
+    let newPage = $(this).url();
+    if (newPage) {
+      window.location = newPage;
+    }
+    return false;
+  });
+
+
+
+
 
   
 
@@ -38,17 +50,17 @@ $(document).ready(function() {
       })
 
       .done(function(response){
-          console.log(response);
+          //console.log(response);
           let results = response.data;
           //console.log(results);
           let randomPark = Math.floor(Math.random() * results.length);
           //console.log(randomPark);
           let featuredPark = results[randomPark];
-          console.log(featuredPark);
+          //console.log(featuredPark);
           let cardTitle = featuredPark.fullName;
-          console.log(cardTitle);
+          //console.log(cardTitle);
           let cardText = featuredPark.description;
-          console.log(cardText); 
+          //console.log(cardText); 
 
           $(".card-title").empty();
           $(".card-title").text(cardTitle);
