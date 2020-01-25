@@ -120,6 +120,11 @@
         .gallery {
             margin-bottom: none,
         }
+        
+        #like-btn {
+            position: relative;
+            float: right;
+        }
         /* State Selection Page */
         
         #state-options {
