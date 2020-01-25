@@ -124,6 +124,8 @@
         #like-btn {
             position: relative;
             float: right;
+            margin-top: 150px;
+            margin-right: 20PX;
         }
         /* State Selection Page */
         
