@@ -29,6 +29,10 @@
             font-weight: 9000;
         }
         
+        .display-4 {
+            font-size: 70px;
+        }
+        
         .col {
             background-color: gray;
             margin: 20px;
@@ -64,12 +68,16 @@
             box-shadow: 1px 1px 1px 1px lightgray;
         }
         
-        .card-group {
-            margin: 15px 17px 100px 17px;
+        .card-deck {
+            margin: 15px 6px 100px 6px;
         }
+        /* .card {
+            margin: 0px 30px 0px 30px;
+        } */
         
-        .card .card-body {
-            margin: 0px 10px 0px 10px;
+        .card-body {
+            margin: 0px 30px 0px 30px;
+            border-left: 1px;
         }
         
         hr {
@@ -88,7 +96,7 @@
             position: fixed;
             box-shadow: 0px 0px 0px 3px lightgray;
         }
-        /* State Page Styling */
+        /* Park Page Styling */
         
         .state-cover {
             margin: 30px 0px 30px 0px;
@@ -103,4 +111,25 @@
         
         .size {
             width: 150px;
+        }
+        
+        .suggest {
+            margin-bottom: 40px;
+        }
+        
+        .gallery {
+            margin-bottom: none,
+        }
+        /* State Selection Page */
+        
+        #state-options {
+            margin: 15px 6px 20px 6px;
+        }
+        
+        .mdb-lightbox {
+            display: flex;
+        }
+        
+        .img-fluid {
+            box-shadow: 2px 2px 2px gray;
         }
