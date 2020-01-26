@@ -167,3 +167,8 @@
         #most-likes {
             margin-bottom: 100px;
         }
+        /* Campground Page */
+        
+        #description {
+            font-weight: lighter !important;
+        }
