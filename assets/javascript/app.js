@@ -57,6 +57,13 @@ $(document).ready(function() {
       //need to get different parks into each card
       window.location.replace("stateselect.html");
 
+      //populate state to title on stateselect
+      $("#state").on("change", function(event){
+event.preventDefault();
+
+$("#state-title").html("");
+      })
+
       $(function() {
         $("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
       });
