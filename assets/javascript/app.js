@@ -41,11 +41,13 @@ $(document).ready(function() {
     //like function
     $("#like-btn").on("click", function(event) {
         event.preventDefault();
-        likeCounter++;
-        database.ref().set({
-            likeCounter: likeCounter
+        parkName = $("#park-title").val().trim();
+        console.log(parkName);
+        
+
+        
         });
-        //console.log(event);
+    
     });
 
     //where the webcam gets add to the page
@@ -103,7 +105,7 @@ $(document).ready(function() {
 
             });
     }
-});
+
 
 let stateCode = sessionStorage.getItem("stateCode");
 
@@ -112,29 +114,27 @@ var featuredURL =
     stateCode +
     "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
 
-var featuredParks = [];
+$.ajax({
+        url: featuredURL,
+        method: "GET"
+    })
+    .done(function(response) {
+        console.log(response);
+        let results = response.data;
+        //console.log(results);
+        let randomPark = Math.floor(Math.random() * results.length);
+        //console.log(randomPark);
+        let featuredPark = results[randomPark];
+        //console.log(featuredPark);
+        let cardTitle = featuredPark.fullName;
 
-// $.ajax({
-//         url: featuredURL,
-//         method: "GET"
-//     })
-//     .done(function(response) {
-//         console.log(response);
-//         let results = response.data;
-//         //console.log(results);
-//         let randomPark = Math.floor(Math.random() * results.length);
-//         //console.log(randomPark);
-//         let featuredPark = results[randomPark];
-//         //console.log(featuredPark);
-//         let cardTitle = featuredPark.fullName;
+        //console.log(cardTitle);
+        let cardText = featuredPark.description;
+        //console.log(cardText);
 
-//         //console.log(cardTitle);
-//         let cardText = featuredPark.description;
-//         //console.log(cardText);
-
-//         $(".card-title").empty();
-//         $(".card-title").text(cardTitle);
-//         $(".card-text").text(cardText);
+        $(".card-title").empty();
+        $(".card-title").text(cardTitle);
+        $(".card-text").text(cardText);
 
 
-//     });
+    });
