@@ -41,9 +41,10 @@ $(document).ready(function () {
   //like function
   $("#like-btn").on("click", function (event) {
     event.preventDefault();
-    likeCounter++;
+    let likedPark = $("#park-title").val().trim();
+    likedPark++;
     database.ref().set({
-      likeCounter: likeCounter
+      likedPark: likedPark
     });
     //console.log(event);
   });
@@ -75,7 +76,7 @@ $(document).ready(function () {
 
 
 function populatePage(){
-  console.log("something");
+  //console.log("something");
   $("#state-title").text(stateCode);
   let queryURL =
   "https://developer.nps.gov/api/v1/parks?stateCode=" +
