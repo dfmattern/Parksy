@@ -116,6 +116,8 @@ var featuredURL =
     stateCode +
     "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
 
+var featuredParks = [];
+
 $.ajax({
         url: featuredURL,
         method: "GET"
