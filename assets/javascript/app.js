@@ -75,8 +75,8 @@ $(document).ready(function() {
 
 
     function populatePage() {
-        console.log("something");
         $("#state-title").text(stateCode);
+        console.log("something");
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
@@ -90,10 +90,15 @@ $(document).ready(function() {
                 let results = response.data;
                 console.log(response);
                 //console.log(results);
-                for(i = 0; i < 6;i++){
+                for(i = 0; i < response.data.length;i++){
+                    console.log("hi");
                   let park = results[i];
                   let cardTitle = "#card-title" + i;
+                  let cardText = "#card-text" + i;
+                  let number = "." + i;
                   $(cardTitle).text(park.fullName);
+                  $(cardText).text(park.description);
+                  $(number).removeAttr("id","hide");
                 }
 
             });
@@ -109,27 +114,27 @@ var featuredURL =
 
 var featuredParks = [];
 
-$.ajax({
-        url: featuredURL,
-        method: "GET"
-    })
-    .done(function(response) {
-        console.log(response);
-        let results = response.data;
-        //console.log(results);
-        let randomPark = Math.floor(Math.random() * results.length);
-        //console.log(randomPark);
-        let featuredPark = results[randomPark];
-        //console.log(featuredPark);
-        let cardTitle = featuredPark.fullName;
+// $.ajax({
+//         url: featuredURL,
+//         method: "GET"
+//     })
+//     .done(function(response) {
+//         console.log(response);
+//         let results = response.data;
+//         //console.log(results);
+//         let randomPark = Math.floor(Math.random() * results.length);
+//         //console.log(randomPark);
+//         let featuredPark = results[randomPark];
+//         //console.log(featuredPark);
+//         let cardTitle = featuredPark.fullName;
 
-        //console.log(cardTitle);
-        let cardText = featuredPark.description;
-        //console.log(cardText);
+//         //console.log(cardTitle);
+//         let cardText = featuredPark.description;
+//         //console.log(cardText);
 
-        $(".card-title").empty();
-        $(".card-title").text(cardTitle);
-        $(".card-text").text(cardText);
+//         $(".card-title").empty();
+//         $(".card-title").text(cardTitle);
+//         $(".card-text").text(cardText);
 
 
-    });
+//     });
