@@ -96,10 +96,17 @@ $(document).ready(function () {
     method: "GET"
   }).then(function (response) {
     //console.log(response);
-    var vid = response.result.webcams[0].id;
     $("#liveWebcam").attr(
       "src",
-      "https://webcams.windy.com/webcams/public/embed/player/" + vid + "/day"
+      "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[0].id + "/day"
+    );
+    $("#liveWebcam1").attr(
+      "src",
+      "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[1].id + "/day"
+    );
+    $("#liveWebcam2").attr(
+      "src",
+      "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[2].id + "/day"
     );
   });
 });
