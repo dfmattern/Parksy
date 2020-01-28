@@ -41,64 +41,71 @@ $(document).ready(function() {
     //like function
     $("#like-btn").on("click", function(event) {
         event.preventDefault();
-        likeCounter++;
-        database.ref().set({
-            likeCounter: likeCounter
-        });
-        //console.log(event);
+        parkName = $("#park-title").val().trim();
+        console.log(parkName);
+
+
+
     });
 
-    //where the webcam gets add to the page
-    var webCamNum = allStateCords[sessionStorage.getItem("stateNumber")];
-    // console.log(webCamNum);
-    var webCam =
-        "https://api.windy.com/api/webcams/v2/list/nearby=" + webCamNum + ",250?key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
+});
+
+//where the webcam gets add to the page
+var webCamNum = allStateCords[sessionStorage.getItem("stateNumber")];
+// console.log(webCamNum);
+var webCam =
+    "https://api.windy.com/api/webcams/v2/list/nearby=" + webCamNum + ",250?key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
+
+$.ajax({
+    url: webCam,
+    method: "GET"
+}).then(function(response) {
+    //console.log(response);
+    $("#liveWebcam").attr(
+        "src",
+        "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[0].id + "/day"
+    );
+    $("#liveWebcam1").attr(
+        "src",
+        "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[1].id + "/day"
+    );
+    $("#liveWebcam2").attr(
+        "src",
+        "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[2].id + "/day"
+    );
+});
+
+
+function populatePage() {
+    $("#state-title").text(stateCode);
+    console.log("something");
+    let queryURL =
+        "https://developer.nps.gov/api/v1/parks?stateCode=" +
+        stateCode +
+        "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
 
     $.ajax({
-        url: webCam,
-        method: "GET"
-    }).then(function(response) {
-        //console.log(response);
-        $("#liveWebcam").attr(
-            "src",
-            "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[0].id + "/day"
-        );
-        $("#liveWebcam1").attr(
-            "src",
-            "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[1].id + "/day"
-        );
-        $("#liveWebcam2").attr(
-            "src",
-            "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[2].id + "/day"
-        );
-    });
+            url: queryURL,
+            method: "GET"
+        })
+        .done(function(response) {
+            let results = response.data;
+            console.log(response);
+            //console.log(results);
+            for (i = 0; i < response.data.length; i++) {
+                console.log("hi");
+                let park = results[i];
+                let cardTitle = "#card-title" + i;
+                let cardText = "#card-text" + i;
+                let number = "." + i;
+                $(cardTitle).text(park.fullName);
+                $(cardText).text(park.description);
+                $(number).removeAttr("id", "hide");
+            }
 
+        });
+}
 
-    function populatePage() {
-        console.log("something");
-        $("#state-title").text(stateCode);
-        let queryURL =
-            "https://developer.nps.gov/api/v1/parks?stateCode=" +
-            stateCode +
-            "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
-
-        $.ajax({
-                url: queryURL,
-                method: "GET"
-            })
-            .done(function(response) {
-                let results = response.data;
-                console.log(response);
-                //console.log(results);
-                for (i = 0; i < 6; i++) {
-                    let park = results[i];
-                    let cardTitle = "#card-title" + i;
-                    $(cardTitle).text(park.fullName);
-                }
-
-            });
-    }
-});
 
 var stateArray = ["CO", "MN", "OH", "NY", "NM"];
 for (i = 0; i < stateArray.length; i++) {
