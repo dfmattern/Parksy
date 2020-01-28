@@ -19,7 +19,7 @@ $(document).ready(function() {
     //database reference as variable
     let database = firebase.database();
     let stateCode = sessionStorage.getItem("stateCode");
-    
+
     let parkName;
     let parkDescription;
     let parkImage;
@@ -122,11 +122,10 @@ for (i = 0; i < stateArray.length; i++) {
             method: "GET"
         })
         .done(function(response) {
-            console.log(response);
             let results = response.data;
             //console.log(results);
             let randomPark = Math.floor(Math.random() * results.length);
-            //console.log(randomPark);
+            console.log(randomPark);
             let featuredPark = results[randomPark];
             //console.log(featuredPark);
             let cardTitle = featuredPark.fullName;
