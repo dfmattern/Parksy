@@ -44,93 +44,107 @@ $(document).ready(function() {
         event.preventDefault();
         parkName = $("#park-title").val().trim();
         console.log(parkName);
-        
 
-        
-        });
-    
+
+
     });
 
-    //where the webcam gets add to the page
-    var webCamNum = allStateCords[sessionStorage.getItem("stateNumber")];
-    // console.log(webCamNum);
-    var webCam =
-        "https://api.windy.com/api/webcams/v2/list/nearby=" + webCamNum + ",250?key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
+});
 
-    $.ajax({
-        url: webCam,
-        method: "GET"
-    }).then(function(response) {
-        //console.log(response);
-        $("#liveWebcam").attr(
-            "src",
-            "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[0].id + "/day"
-        );
-        $("#liveWebcam1").attr(
-            "src",
-            "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[1].id + "/day"
-        );
-        $("#liveWebcam2").attr(
-            "src",
-            "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[2].id + "/day"
-        );
-    });
-
-
-    function populatePage() {
-        console.log("something");
-        $("#state-title").text(stateCode);
-        let queryURL =
-            "https://developer.nps.gov/api/v1/parks?stateCode=" +
-            stateCode +
-            "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
-
-        $.ajax({
-                url: queryURL,
-                method: "GET"
-            })
-            .done(function(response) {
-                let results = response.data;
-                console.log(response);
-                //console.log(results);
-                for(i = 0; i < 6;i++){
-                  let park = results[i];
-                  let cardTitle = "#card-title" + i;
-                  $(cardTitle).text(park.fullName);
-                }
-
-            });
-    }
-
-
-let stateCode = sessionStorage.getItem("stateCode");
-
-var featuredURL =
-    "https://developer.nps.gov/api/v1/parks?stateCode=" +
-    stateCode +
-    "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
+//where the webcam gets add to the page
+var webCamNum = allStateCords[sessionStorage.getItem("stateNumber")];
+// console.log(webCamNum);
+var webCam =
+    "https://api.windy.com/api/webcams/v2/list/nearby=" + webCamNum + ",250?key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
 
 $.ajax({
-        url: featuredURL,
-        method: "GET"
-    })
-    .done(function(response) {
-        console.log(response);
-        let results = response.data;
-        //console.log(results);
-        let randomPark = Math.floor(Math.random() * results.length);
-        //console.log(randomPark);
-        let featuredPark = results[randomPark];
-        //console.log(featuredPark);
-        let cardTitle = featuredPark.fullName;
-
-        //console.log(cardTitle);
-        let cardText = featuredPark.description;
-        //console.log(cardText);
-
-        $(".card-title").empty();
-        $(".card-title").text(cardTitle);
-        $(".card-text").text(cardText);
+    url: webCam,
+    method: "GET"
+}).then(function(response) {
+    //console.log(response);
+    $("#liveWebcam").attr(
+        "src",
+        "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[0].id + "/day"
+    );
+    $("#liveWebcam1").attr(
+        "src",
+        "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[1].id + "/day"
+    );
+    $("#liveWebcam2").attr(
+        "src",
+        "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[2].id + "/day"
+    );
+});
 
 
-    });
+function populatePage() {
+    $("#state-title").text(stateCode);
+    console.log("something");
+    let queryURL =
+        "https://developer.nps.gov/api/v1/parks?stateCode=" +
+        stateCode +
+        "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
+
+    $.ajax({
+            url: queryURL,
+            method: "GET"
+        })
+        .done(function(response) {
+            let results = response.data;
+            console.log(response);
+            //console.log(results);
+            for (i = 0; i < response.data.length; i++) {
+                console.log("hi");
+                let park = results[i];
+                let cardTitle = "#card-title" + i;
+                let cardText = "#card-text" + i;
+                let number = "." + i;
+                $(cardTitle).text(park.fullName);
+                $(cardText).text(park.description);
+                $(number).removeAttr("id", "hide");
+            }
+
+        });
+}
+
+
+var stateArray = ["CO", "MN", "OH", "NY", "NM"];
+for (i = 0; i < stateArray.length; i++) {
+    let stateCode = stateArray[i];
+    console.log(stateCode + "this is working")
+    var featuredURL =
+        "https://developer.nps.gov/api/v1/parks?stateCode=" +
+        stateCode +
+        "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
+
+    $.ajax({
+            url: featuredURL,
+            method: "GET"
+        })
+        .done(function(response) {
+            console.log(response);
+            let results = response.data;
+            //console.log(results);
+            let randomPark = Math.floor(Math.random() * results.length);
+            //console.log(randomPark);
+            let featuredPark = results[randomPark];
+            //console.log(featuredPark);
+            let cardTitle = featuredPark.fullName;
+
+            //console.log(cardTitle);
+            let cardText = featuredPark.description;
+            //console.log(cardText);
+
+            $("#card-title").empty();
+            $("#card-title").text(cardTitle);
+            $("#card-text").text(cardText);
+            $("#card-title1").empty();
+            $("#card-title1").text(cardTitle);
+            $("#card-text1").text(cardText);
+            $("#card-title2").empty();
+            $("#card-title2").text(cardTitle);
+            $("#card-text2").text(cardText);
+
+
+        });
+}

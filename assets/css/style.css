@@ -172,3 +172,6 @@
         #description {
             font-weight: lighter !important;
         }
+        #hide{
+            display: none;
+        }
