@@ -38,12 +38,19 @@ $(document).ready(function() {
         //console.log(stateCode);
 
     });
-
+database.ref().on("value", function(snapshot){
+    console.log(snapshot.val());
+    likes = snapshot.val();
+    
+})
     //like function
     $("#like-btn").on("click", function(event) {
         event.preventDefault();
         parkName = $("#park-title").val().trim();
-        console.log(parkName);
+        database.ref().set({
+            likes : parkName
+        })
+       
 
 
 
