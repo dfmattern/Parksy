@@ -111,9 +111,9 @@ $(document).ready(function() {
     }
 
     var stateArray = ["CO", "MN", "OH", "NY", "NM"];
-    for (i = 0; i < stateArray.length; i++) {
+    for (let i = 0; i < 3; i++) {
         let stateCode = stateArray[i];
-        console.log(stateCode + "this is working")
+
         var featuredURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
@@ -125,29 +125,33 @@ $(document).ready(function() {
             })
             .done(function(response) {
                 console.log(response);
+
+
                 let results = response.data;
                 //console.log(results);
                 let randomPark = Math.floor(Math.random() * results.length);
-                console.log(randomPark);
+
                 let featuredPark = results[randomPark];
+
                 //console.log(featuredPark);
                 let cardTitle = featuredPark.fullName;
+
 
                 //console.log(cardTitle);
                 let cardText = featuredPark.description;
                 //console.log(cardText);
 
-                $("#card-title").empty();
-                $("#card-title").text(cardTitle);
-                $("#card-text").text(cardText);
-                $("#card-title1").empty();
-                $("#card-title1").text(cardTitle);
-                $("#card-text1").text(cardText);
-                $("#card-title2").empty();
-                $("#card-title2").text(cardTitle);
-                $("#card-text2").text(cardText);
+                let randomCard = "#card-title" + i;
+                console.log(randomCard)
+                let randomText = "#card-text" + i;
+                console.log(randomText)
+                $(randomCard).text(cardTitle);
+                $(randomText).text(cardText);
+                console.log("End of Loop")
+
 
 
             });
+        console.log("this is the i", i);
     }
 });
