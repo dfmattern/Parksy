@@ -87,23 +87,14 @@ $(document).ready(function() {
                 method: "GET"
             })
             .done(function(response) {
-                console.log(response);
                 let results = response.data;
+                console.log(response);
                 //console.log(results);
-                let randomPark = Math.floor(Math.random() * results.length);
-                //console.log(randomPark);
-                let featuredPark = results[randomPark];
-                //console.log(featuredPark);
-                let cardTitle = featuredPark.fullName;
-                //console.log(cardTitle);
-                let cardText = featuredPark.description;
-                //console.log(cardText);
-
-                $(".card-title").empty();
-                $(".card-title").text(cardTitle);
-                $(".card-text").text(cardText);
-
-                //need to get different parks into each card
+                for(i = 0; i < 6;i++){
+                  let park = results[i];
+                  let cardTitle = "#card-title" + i;
+                  $(cardTitle).text(park.fullName);
+                }
 
             });
     }
