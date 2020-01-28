@@ -23,11 +23,60 @@ $(document).ready(function() {
     let parkName;
     let parkDescription;
     let parkImage;
+    let allStateCords = ["61.370716,-152.404419", "34.969704,-92.373123", "33.729759,-111.431221", "36.116203,-119.681564", "39.059811,-105.311104", "27.766279,-81.686783", "21.094318,-157.498337", "39.849426,-86.258278", "37.668140,-84.670067", "44.693947,-69.381927", "43.326618,-84.536095", "45.694454,-93.900192", "38.456085,-92.288368", "46.921925,-110.454353", "38.313515,-117.055374", "34.840515,-106.248482", "47.528912,-99.784012", "40.388783,-82.764915", "44.572021,-122.070938", "33.856892,-80.945007", "44.299782,-99.438828", "35.747845,-86.692345", "31.054487,-97.563461", "40.150032,-111.862434", "37.769337,-78.169968", "47.400902,-121.490494", "42.755966,-107.302490"];
+    populatePage();
 
     $("#state").on("change", function() {
-        sessionStorage.setItem("stateCode", $("#state").val());
+        codeNumber = $("#state").val();
+        parkNumber = codeNumber.replace(/^\D+/g, '');
+        stateCode = codeNumber.replace(/[0-9]/g, '')
+        sessionStorage.setItem("stateNumber", parkNumber);
+        sessionStorage.setItem("stateCode", stateCode);
         stateCode = sessionStorage.getItem("stateCode");
+        window.location = "stateselect.html";
         //console.log(stateCode);
+
+    });
+
+    //like function
+    $("#like-btn").on("click", function(event) {
+        event.preventDefault();
+        likeCounter++;
+        database.ref().set({
+            likeCounter: likeCounter
+        });
+        //console.log(event);
+    });
+
+    //where the webcam gets add to the page
+    var webCamNum = allStateCords[sessionStorage.getItem("stateNumber")];
+    // console.log(webCamNum);
+    var webCam =
+        "https://api.windy.com/api/webcams/v2/list/nearby=" + webCamNum + ",250?key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
+
+    $.ajax({
+        url: webCam,
+        method: "GET"
+    }).then(function(response) {
+        //console.log(response);
+        $("#liveWebcam").attr(
+            "src",
+            "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[0].id + "/day"
+        );
+        $("#liveWebcam1").attr(
+            "src",
+            "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[1].id + "/day"
+        );
+        $("#liveWebcam2").attr(
+            "src",
+            "https://webcams.windy.com/webcams/public/embed/player/" + response.result.webcams[2].id + "/day"
+        );
+    });
+
+
+    function populatePage() {
+        console.log("something");
+        $("#state-title").text(stateCode);
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
@@ -46,7 +95,6 @@ $(document).ready(function() {
                 let featuredPark = results[randomPark];
                 //console.log(featuredPark);
                 let cardTitle = featuredPark.fullName;
-
                 //console.log(cardTitle);
                 let cardText = featuredPark.description;
                 //console.log(cardText);
@@ -56,46 +104,9 @@ $(document).ready(function() {
                 $(".card-text").text(cardText);
 
                 //need to get different parks into each card
-                window.location.replace("stateselect.html");
 
-                //populate state to title on stateselect
-                $("#state").on("change", function(event) {
-                    event.preventDefault();
-
-                    $("#state-title").html("");
-                })
-
-                $(function() {
-                    $("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
-                });
             });
-    });
-
-    //like function
-    $("#like-btn").on("click", function(event) {
-        event.preventDefault();
-        likeCounter++;
-        database.ref().set({
-            likeCounter: likeCounter
-        });
-        //console.log(event);
-    });
-
-    //where the webcam gets add to the page
-    var webCam =
-        "https://api.windy.com/api/webcams/v2/list/limit=50?show=webcams:location,image,player&key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
-
-    $.ajax({
-        url: webCam,
-        method: "GET"
-    }).then(function(response) {
-        //console.log(response);
-        var vid = response.result.webcams[0].id;
-        $("#liveWebcam").attr(
-            "src",
-            "https://webcams.windy.com/webcams/public/embed/player/" + vid + "/day"
-        );
-    });
+    }
 });
 
 let stateCode = sessionStorage.getItem("stateCode");
