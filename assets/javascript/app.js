@@ -41,11 +41,13 @@ $(document).ready(function() {
     //like function
     $("#like-btn").on("click", function(event) {
         event.preventDefault();
-        likeCounter++;
-        database.ref().set({
-            likeCounter: likeCounter
+        parkName = $("#park-title").val().trim();
+        console.log(parkName);
+        
+
+        
         });
-        //console.log(event);
+    
     });
 
     //where the webcam gets add to the page
@@ -98,7 +100,7 @@ $(document).ready(function() {
 
             });
     }
-});
+
 
 let stateCode = sessionStorage.getItem("stateCode");
 
