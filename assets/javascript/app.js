@@ -46,6 +46,10 @@ $(document).ready(function () {
         //console.log(stateCode);
 
     });
+    $(".card").on("click", function (){
+        sessionStorage.setItem("parkName" , $(".card").attr("id"));
+    });
+
 
     //like function
     $("#like-btn").on("click", function (event) {
@@ -105,9 +109,12 @@ function populatePage() {
                 $(cardTitle).text(park.fullName);
                 $(cardText).text(park.description);
                 $(number).removeAttr("id", "hide");
+                $(number).attr("id", park.name);
             }
 
         });
+        var parkTitle = sessionStorage.getItem("parkName");
+        $("#park-title").text(parkTitle);
 }
 
 var stateArray = ["CO", "MN", "OH", "NY", "NM"];
