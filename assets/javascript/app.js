@@ -85,15 +85,10 @@ $(document).ready(function() {
                     likes = [];
                 }
                 console.log(likes);
-            }); <<
-            << << < HEAD
+            }); 
             $(".card").on("click", function() {
-                sessionStorage.setItem("parkName", $(".card").attr("id")); ===
-                === =
-                $(".card").on("click", function() {
-                    sessionStorage.setItem("parkName", $(this).attr("id")); >>>
-                    >>> > 98e eba687be09409e4130eb8eac0764473c32fca
-                });
+                sessionStorage.setItem("parkName", $(".card").attr("id"));
+            });
 
                 //like function
                 $("#like-btn").on("click", function(event) {
@@ -117,7 +112,6 @@ $(document).ready(function() {
                         likes: likes
                     });
                 });
-            });
 
             $.ajax({
                 url: webCam,
@@ -154,33 +148,9 @@ $(document).ready(function() {
                     stateCode +
                     "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
 
-                $.ajax({ <<
-                    << << < HEAD
-                    url: webCam,
-                    method: "GET"
-                }).then(function(response) {
-                    //console.log(response);
-                    $("#liveWebcam").attr(
-                        "src",
-                        "https://webcams.windy.com/webcams/public/embed/player/" +
-                        response.result.webcams[0].id +
-                        "/day"
-                    );
-                    $("#liveWebcam1").attr(
-                        "src",
-                        "https://webcams.windy.com/webcams/public/embed/player/" +
-                        response.result.webcams[1].id +
-                        "/day"
-                    );
-                    $("#liveWebcam2").attr(
-                        "src",
-                        "https://webcams.windy.com/webcams/public/embed/player/" +
-                        response.result.webcams[2].id +
-                        "/day"
-                    ); ===
-                    === =
+                $.ajax({
                     url: queryURL,
-                        method: "GET"
+                    method: "GET"
                 }).done(function(response) {
                     let results = response.data;
                     //console.log(response);
@@ -195,8 +165,7 @@ $(document).ready(function() {
                         $(cardText).text(park.description);
                         $(number).removeAttr("id", "hide");
                         $(number).attr("id", park.name);
-                    } >>>
-                    >>> > 98e eba687be09409e4130eb8eac0764473c32fca
+                    } 
                 });
                 // var parkTitle = sessionStorage.getItem("parkName");
                 //$("#park-title").text(parkTitle);
@@ -323,37 +292,7 @@ $(document).ready(function() {
                         $(randomCard).text(cardTitle);
                         $(randomText).text(cardText);
                         $(number).attr("id", featuredPark.fullName);
-                        //console.log("End of Loop")
-
-                        $.ajax({
-                            url: featuredURL,
-                            method: "GET"
-                        }).done(function(response) {
-                            //console.log(response);
-
-                            let results = response.data;
-                            //console.log(results);
-                            let randomPark = Math.floor(Math.random() * results.length);
-
-                            let featuredPark = results[randomPark];
-
-                            //console.log(featuredPark);
-                            let cardTitle = featuredPark.fullName;
-
-                            //console.log(cardTitle);
-                            let cardText = featuredPark.description;
-                            //console.log(cardText);
-
-                            let randomCard = "#card-title" + i;
-                            // console.log(randomCard)
-                            let randomText = "#card-text" + i;
-                            //console.log(randomText)
-                            $(randomCard).text(cardTitle);
-                            $(randomText).text(cardText);
-                            //console.log("End of Loop")
-                        });
-                        //console.log("this is the i", i);
-                    })
+                    });
 
                 let imageURL =
                     "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
@@ -372,5 +311,6 @@ $(document).ready(function() {
                     for (let i = 0; i < images.length; i++) {
                         let primaryImage = images[i];
                     }
-                });
+                })
             }
+});
