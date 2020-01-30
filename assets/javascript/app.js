@@ -85,7 +85,7 @@ $(document).ready(function () {
         console.log(likes);
     });
     $(".card").on("click", function (){
-        sessionStorage.setItem("parkName" , $(".card").attr("id"));
+        sessionStorage.setItem("parkName" , $(this).attr("id"));
     });
 
     //like function
@@ -144,7 +144,7 @@ $(document).ready(function () {
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
+            "&q=National%20Park&api_key=KzgXnzmLxc2FEL3mAkkAp1N4saPWswlF27VPxobf";
 
         $.ajax({
             url: queryURL,
@@ -159,24 +159,35 @@ $(document).ready(function () {
                 let cardTitle = "#card-title" + i;
                 let cardText = "#card-text" + i;
                 let number = "." + i;
+
                 $(cardTitle).text(park.fullName);
                 $(cardText).text(park.description);
                 $(number).removeAttr("id", "hide");
-                $(number).attr("id", park.name);
+                $(number).attr("id", park.fullName);
+                
             }
         });
         var parkTitle = sessionStorage.getItem("parkName");
         $("#park-title").text(parkTitle);
+        let QueryUrlPark = "https://developer.nps.gov/api/v1/parks?q="+ parkTitle+"&api_key=KzgXnzmLxc2FEL3mAkkAp1N4saPWswlF27VPxobf";
+        $.ajax({
+            url: QueryUrlPark,
+            method: "GET"
+        }).then(function(response){
+            console.log(response);
+            $("#parkDirections").text(response.data[0].directionsInfo);
+        });
     }
 
     var stateArray = ["CO", "MN", "OH", "NY", "NM"];
-    for (let i = 0; i < 3; i++) {
-        let stateCode = stateArray[i];
+    for (let i = 6; i < 9; i++) {
+        let j = Math.floor(Math.random() * 4);
+        let stateCode = stateArray[j];
 
         var featuredURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
+            "&q=National%20Park&api_key=KzgXnzmLxc2FEL3mAkkAp1N4saPWswlF27VPxobf";
 
         $.ajax({
             url: featuredURL,
