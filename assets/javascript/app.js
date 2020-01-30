@@ -24,6 +24,8 @@ $(document).ready(function () {
     let parkDescription;
     let parkImage;
     let likes;
+    var parkTitle = sessionStorage.getItem("parkName");
+        $("#park-title").text(parkTitle);
     let allStateCords = [
         "61.370716,-152.404419",
         "34.969704,-92.373123",
@@ -154,7 +156,7 @@ $(document).ready(function () {
             console.log(response);
             //console.log(results);
             for (i = 0; i < response.data.length; i++) {
-                console.log("hi");
+               // console.log("hi");
                 let park = results[i];
                 let cardTitle = "#card-title" + i;
                 let cardText = "#card-text" + i;
@@ -194,7 +196,7 @@ $(document).ready(function () {
             method: "GET"
         })
             .done(function (response) {
-                console.log(response);
+                //console.log(response);
 
 
                 let results = response.data;
@@ -212,16 +214,29 @@ $(document).ready(function () {
                 //console.log(cardText);
 
                 let randomCard = "#card-title" + i;
-                console.log(randomCard)
+               // console.log(randomCard)
                 let randomText = "#card-text" + i;
-                console.log(randomText)
+                //console.log(randomText)
                 $(randomCard).text(cardTitle);
                 $(randomText).text(cardText);
-                console.log("End of Loop")
+                //console.log("End of Loop")
 
 
 
             });
-        console.log("this is the i", i);
+        //console.log("this is the i", i);
     }
+    
+    let imageURL =
+    "https://ridb.recreation.gov/api/v1/media?query=" + parkTitle + "&limit=50&offset=0&apikey=27b8c6d8-739a-4df3-a008-21aa585669b9";
+
+        $.ajax({
+            url: imageURL,
+            method: "GET"
+        })
+        .done(function(response) {
+            console.log(response);
+            
+        })
+   
 });
