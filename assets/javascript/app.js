@@ -15,7 +15,7 @@ $(document).ready(function() {
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
             // firebase.analytics();
-            console.log("Firebase initialized");
+            //console.log("Firebase initialized");
             //database reference as variable
             let database = firebase.database();
             let stateCode = sessionStorage.getItem("stateCode");
@@ -56,10 +56,10 @@ $(document).ready(function() {
                 "42.755966,-107.302490"
             ];
 
-            console.log("variables set, ALL State Coordinates:", allStateCords);
+            //console.log("variables set, ALL State Coordinates:", allStateCords);
 
             var webCamNum = allStateCords[sessionStorage.getItem("stateNumber")];
-            console.log("Web Cam Number", webCamNum);
+            //console.log("Web Cam Number", webCamNum);
 
             var webCam =
                 "https://api.windy.com/api/webcams/v2/list/nearby=" +
@@ -79,12 +79,12 @@ $(document).ready(function() {
                 //console.log(stateCode);
             });
             database.ref().on("value", function(snapshot) {
-                console.log(snapshot.val());
+                //console.log(snapshot.val());
                 likes = snapshot.val().likes;
                 if (!likes) {
                     likes = [];
                 }
-                console.log(likes);
+                //console.log(likes);
             }); 
             $(".card").on("click", function() {
                 sessionStorage.setItem("parkName", $(".card").attr("id"));
@@ -96,7 +96,7 @@ $(document).ready(function() {
                     parkName = $("#park-title")
                         .text()
                         .trim();
-                    console.log("Park Name", parkName);
+                    //console.log("Park Name", parkName);
 
                     // if park is in array, increment it
                     let foundParkIndex = likes.findIndex(park => park[parkName]);
@@ -173,7 +173,7 @@ $(document).ready(function() {
 
             function populatePage() {
                 $("#state-title").text(stateCode);
-                console.log("something");
+                //console.log("something");
                 var parkTitle = sessionStorage.getItem("parkName");
                 $("#park-title").text(parkTitle);
                 let queryURL =
@@ -186,8 +186,8 @@ $(document).ready(function() {
                     method: "GET"
                 }).done(function(response) {
                     let results = response.data;
-                    console.log(response);
-                    console.log(results);
+                    //console.log(response);
+                    //console.log(results);
                     for (i = 0; i < response.data.length; i++) {
                         // console.log("hi");
                         let park = results[i];
@@ -214,7 +214,7 @@ $(document).ready(function() {
                     })
                     .done(function(alertResponse) {
                         let alertResults = alertResponse.data;
-                        console.log("alert API", alertResponse);
+                        //console.log("alert API", alertResponse);
 
 
                         let alert = alertResults[0];
@@ -233,7 +233,7 @@ $(document).ready(function() {
                     url: QueryUrlPark,
                     method: "GET"
                 }).then(function(response) {
-                    console.log(response);
+                   //console.log(response);
                     $("#parkDirections").text(response.data[0].directionsInfo);
                     $("#weather").text(response.data[0].weatherInfo);
                     $("#description").text(response.data[0].description);
@@ -243,7 +243,7 @@ $(document).ready(function() {
                     url: QueryUrlVisitor,
                     method: "GET"
                 }).then(function(response) {
-                    console.log(response);
+                   // console.log(response);
                     $("#centerName").text(response.data[0].name);
                     $("#centerInfo").text(response.data[0].description);
                 });
@@ -293,24 +293,22 @@ $(document).ready(function() {
                         $(randomText).text(cardText);
                         $(number).attr("id", featuredPark.fullName);
                     });
+                }
+            
+            let imageURL =
+            "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
+            parkTitle +
+            "&limit=50&apikey=27b8c6d8-739a-4df3-a008-21aa585669b9";
+        //console.log(imageURL);
 
-                let imageURL =
-                    "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
-                    parkTitle +
-                    "&limit=50&apikey=27b8c6d8-739a-4df3-a008-21aa585669b9";
-                //console.log(imageURL);
+        $.ajax({
+            url: imageURL,
+            method: "GET"
+        }).done(function(response) {
+           console.log(response);
 
-                $.ajax({
-                    url: imageURL,
-                    method: "GET"
-                }).done(function(response) {
-                    //console.log(response);
-
-                    let images = response.recdata;
-                    console.log(images);
-                    for (let i = 0; i < images.length; i++) {
-                        let primaryImage = images[i];
-                    }
-                })
-            }
+            
+        })
+    
+            
 });
