@@ -227,9 +227,11 @@ $(document).ready(function () {
                 let randomCard = "#card-title" + i;
                // console.log(randomCard)
                 let randomText = "#card-text" + i;
+                let number = "." + i;
                 //console.log(randomText)
                 $(randomCard).text(cardTitle);
                 $(randomText).text(cardText);
+                $(number).attr("id", featuredPark.fullName);
                 //console.log("End of Loop")
 
 
