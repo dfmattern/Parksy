@@ -296,7 +296,7 @@ $(document).ready(function () {
       //console.log("End of Loop")
     });
     //console.log("this is the i", i);
-  }
+  })
 
   let imageURL =
     "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
@@ -316,7 +316,7 @@ $(document).ready(function () {
     let primaryImage = images[i];
     }
   });
-  });
+  }
   
 
 
