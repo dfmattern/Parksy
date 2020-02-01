@@ -349,15 +349,14 @@ $(document).ready(function() {
         console.log(primaryImage);
         displayImageURL = primaryImage.URL;
         console.log(displayImageURL);
-       // $('.displayImage').attr('src',displayImageURL)
-        
-        $('#park-jumbo').css('background', "url(" + displayImageURL + ")").css("background-repeat", "no-repeat").css("background-size", "cover");
-        
+        // $('.displayImage').attr('src',displayImageURL)
+
+        $("#park-jumbo")
+          .css("background", "url(" + displayImageURL + ")")
+          .css("background-repeat", "no-repeat")
+          .css("background-size", "cover");
       }
     }
-
    
   });
-
- 
 });
