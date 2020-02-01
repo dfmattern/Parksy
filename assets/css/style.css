@@ -14,8 +14,10 @@
         
         .jumbotron {
             margin: 30px 0px 30px 0px;
-            background: url('../images/hendrik-cornelissen--qrcOR33ErA-unsplash.jpg') no-repeat center center;
+            background-image: url('../images/hendrik-cornelissen--qrcOR33ErA-unsplash.jpg') no-repeat center center;
             background-size: cover;
+            background-repeat: no-repeat;
+            
             padding-top: 0%;
             padding-bottom: 20%;
             color: white;
