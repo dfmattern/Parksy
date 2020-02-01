@@ -355,7 +355,7 @@ $(document).ready(function() {
     let imageURL =
         "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
         parkTitle +
-        "&limit=50&apikey=27b8c6d8-739a-4df3-a008-21aa585669b9";
+        "&limit=50&apikey=nMC9cF6yvuFPmEzgpKjT2RVDg4vI5KkGX1TfKexa";
     //console.log(imageURL);
 
     $.ajax({
