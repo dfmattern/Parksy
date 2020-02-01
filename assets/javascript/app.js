@@ -396,10 +396,10 @@ $(document).ready(function() {
 //for (let i = 0; i < data.length; i++){
   //  if (data[i].isDaada){
     //    dad= data[i];
-    }
+    //}
     //let dads =data.filter(person =>{
       //  return person.isDad
         //console.log(dads[0]);
         
-    })
-}
+    //})
+//}
