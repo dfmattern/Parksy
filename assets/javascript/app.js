@@ -241,6 +241,7 @@ $(document).ready(function() {
             url: campURL,
             method: "GET"
         }).done(function(campResponse) {
+            console.log("CAMPURL: ", campURL)
             let campResults = campResponse.data;
             console.log("campgrounds API", campResponse);
             let camp = campResults[0];
