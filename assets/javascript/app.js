@@ -382,7 +382,9 @@ $(document).ready(function() {
                 let secondaryImageArr = [];
                 secondaryImageArr.push(imageURL);
                 console.log(secondaryImageArr);
-                let 
+                let randomParkImage = secondaryImageArr[Math.floor(MAth.random() * secondaryImageArr.length)];
+                //console.log(randomParkImage);
+                $("#img0", "img1", "img3").css("background", "url(" + randomParkImage +")");
                 
 
             
