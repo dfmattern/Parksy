@@ -347,6 +347,11 @@ $(document).ready(function() {
       if (response.RECDATA[i].IsPrimary) {
         primaryImage = response.RECDATA[i];
         console.log(primaryImage);
+        displayImageURL = primaryImage.URL;
+        console.log(displayImageURL);
+       // $('.displayImage').attr('src',displayImageURL)
+        
+        $('#park-jumbo').css('background', "url(" + displayImageURL + ")").css("background-repeat", "no-repeat");
         
       }
     }
