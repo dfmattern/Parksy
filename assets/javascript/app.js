@@ -18,7 +18,6 @@ $(document).ready(function() {
     console.log("Firebase initialized");
     //database reference as variable
     let database = firebase.database();
-    let stateCode = sessionStorage.getItem("stateCode");
     let likeCounter = 0;
     let parkName;
     let parkDescription;
@@ -56,14 +55,6 @@ $(document).ready(function() {
 
     console.log("variables set, ALL State Coordinates:", allStateCords);
 
-    var webCamNum = allStateCords[sessionStorage.getItem("stateNumber")];
-    console.log("Web Cam Number", webCamNum);
-
-    var webCam =
-        "https://api.windy.com/api/webcams/v2/list/nearby=" +
-        webCamNum +
-        ",250?key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
-
     function parseURLParameter(parameter) {
         var fullURL = window.location.search.substring(1);
         var parametersArray = fullURL.split("&");
@@ -75,12 +66,21 @@ $(document).ready(function() {
         }
     }
     var parkTitle = parseURLParameter("park");
+    var stateCode = parseURLParameter("state");
+    var parkNumber = parseURLParameter("num");
     console.log("PARKTITLE: ", parkTitle);
     if (parkTitle == null) {} else {
         parkTitle = parkTitle.replace(/[^\w\s]/gi, " ").replace(/[0-9]/g, "");
     }
 
     $("#park-title").text(parkTitle);
+    var webCamNum = allStateCords[parkNumber];
+    console.log("Web Cam Number", webCamNum);
+
+    var webCam =
+        "https://api.windy.com/api/webcams/v2/list/nearby=" +
+        webCamNum +
+        ",250?key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
 
     populatePage();
 
@@ -88,10 +88,8 @@ $(document).ready(function() {
         codeNumber = $("#state").val();
         parkNumber = codeNumber.replace(/^\D+/g, "");
         stateCode = codeNumber.replace(/[0-9]/g, "");
-        sessionStorage.setItem("stateNumber", parkNumber);
-        sessionStorage.setItem("stateCode", stateCode);
-        stateCode = sessionStorage.getItem("stateCode");
-        window.location = "stateselect.html";
+        window.location =
+            "stateselect.html?state=" + stateCode + "&num=" + parkNumber;
         //console.log(stateCode);
     });
     database.ref().on("value", function(snapshot) {
@@ -105,7 +103,13 @@ $(document).ready(function() {
 
     $(".park").on("click", function() {
         parkTitle = $(this).attr("id");
-        window.location = "parkpage.html?park=" + parkTitle;
+        window.location =
+            "parkpage.html?state=" +
+            stateCode +
+            "&num=" +
+            parkNumber +
+            "&park=" +
+            parkTitle;
     });
 
     $("#link-camp-info").on("click", function() {
@@ -276,10 +280,6 @@ $(document).ready(function() {
                 let campDesc = "#description";
                 let campFeatures = "#sites";
                 let campHours = "#camp-hours";
-                let campWeather = "#camp-weather";
-                let campAcc = "#camp-acc";
-                let campDir = "#camp-dir";
-
 
                 $(campName).text(camp.name);
                 $(campInfo).text(camp.description);
@@ -287,15 +287,6 @@ $(document).ready(function() {
                 $(campPageName).text(camp.name);
                 $(campFeatures).text(camp.campsites.totalsites);
                 $(campHours).text(camp.regulationsoverview);
-                $(campWeather).text(camp.weatheroverview);
-                $(campAcc).text(camp.accessibility.wheelchairaccess);
-                if (camp.directionsoverview == null) {
-                    $("#hide-dir").hide();
-
-                } else {
-                    $(campDir).text(camp.directionsoverview);
-                }
-
             }
         });
 
@@ -399,11 +390,9 @@ $(document).ready(function() {
                 let secondaryImageArr = [];
                 secondaryImageArr.push(imageURL);
                 console.log(secondaryImageArr);
-
-
-
-
-
+                let randomParkImage = secondaryImageArr[Math.floor(Math.random() * secondaryImageArr.length)];
+                //console.log(randomParkImage);
+                $("#img0", "img1", "img3").css("background", "url(" + randomParkImage + ")");
             }
         }
     });
