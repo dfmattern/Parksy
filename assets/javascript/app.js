@@ -380,12 +380,17 @@ $(document).ready(function() {
             } else {
                 response.RECDATA[i].imageURL;
                 secondaryImage = response.RECDATA[i];
-                console.log(secondaryImage);
+                //console.log(secondaryImage);
                 imageURL = secondaryImage.URL;
-                console.log(imageURL);
+                //console.log(imageURL);
                 let secondaryImageArr = [];
                 secondaryImageArr.push(imageURL);
                 console.log(secondaryImageArr);
+
+
+
+
+
             }
         }
     });
