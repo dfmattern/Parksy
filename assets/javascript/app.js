@@ -280,6 +280,8 @@ $(document).ready(function() {
             })
 
 
+
+
         var parkTitle = sessionStorage.getItem("parkName");
         $("#park-title").text(parkTitle);
         let QueryUrlPark = "https://developer.nps.gov/api/v1/parks?q=" + parkTitle + "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
