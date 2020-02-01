@@ -275,14 +275,27 @@ $(document).ready(function() {
                 let campPageName = "#camp-title";
                 let campDesc = "#description";
                 let campFeatures = "#sites";
-                let campHours = "#camp-hours"
+                let campHours = "#camp-hours";
+                let campWeather = "#camp-weather";
+                let campAcc = "#camp-acc";
+                let campDir = "#camp-dir";
+
 
                 $(campName).text(camp.name);
                 $(campInfo).text(camp.description);
                 $(campDesc).text(camp.description);
                 $(campPageName).text(camp.name);
                 $(campFeatures).text(camp.campsites.totalsites);
-                $(campHours).text(camp.regulationsoverview)
+                $(campHours).text(camp.regulationsoverview);
+                $(campWeather).text(camp.weatheroverview);
+                $(campAcc).text(camp.accessibility.wheelchairaccess);
+                if (camp.directionsoverview == null) {
+                    $("#hide-dir").hide();
+
+                } else {
+                    $(campDir).text(camp.directionsoverview);
+                }
+
             }
         });
 
