@@ -379,18 +379,21 @@ $(document).ready(function() {
         // $('.displayImage').attr('src',displayImageURL)
 
         $("#park-jumbo")
-          .css("background", "url(" + displayImageURL + ")")
-          .css("background-repeat", "no-repeat")
-          .css("background-size", "cover");
-      } else {
-        response.RECDATA[i].imageURL;
-        secondaryImage = response.RECDATA[i];
-        //console.log(secondaryImage);
-        imageURL = secondaryImage.URL;
-        //console.log(imageURL);
-        let secondaryImageArr = [];
-        secondaryImageArr.push(imageURL);
-        console.log(secondaryImageArr);
+                    .css("background", "url(" + displayImageURL + ")")
+                    .css("background-repeat", "no-repeat")
+                    .css("background-size", "cover");
+            } else {
+                response.RECDATA[i].imageURL;
+                secondaryImage = response.RECDATA[i];
+                //console.log(secondaryImage);
+                imageURL = secondaryImage.URL;
+                //console.log(imageURL);
+                let secondaryImageArr = [];
+                secondaryImageArr.push(imageURL);
+                console.log(secondaryImageArr);
+                let randomParkImage = secondaryImageArr[Math.floor(MAth.random() * secondaryImageArr.length)];
+                //console.log(randomParkImage);
+                $("#img0", "img1", "img3").css("background", "url(" + randomParkImage +")");
       }
     }
   });
