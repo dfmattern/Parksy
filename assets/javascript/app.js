@@ -160,7 +160,7 @@ $(document).ready(function() {
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=okpdhhaUCFc3HUXX3o9Zqkxf9mYCoAIaAhSIVL4p";
+            "&q=National%20Park&api_key=WEm5yVqEeydUvUmKoSA5uOOpRNgEJTedmEhxepPu";
 
         $.ajax({
             url: queryURL,
@@ -181,7 +181,7 @@ $(document).ready(function() {
                 $(number).attr("id", park.name);
             }
         });
-        // var parkTitle = sessionStorage.getItem("parkName");
+        var parkTitle = sessionStorage.getItem("parkName");
         //$("#park-title").text(parkTitle);
     }
 
@@ -191,7 +191,7 @@ $(document).ready(function() {
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=okpdhhaUCFc3HUXX3o9Zqkxf9mYCoAIaAhSIVL4p";
+            "&q=National%20Park&api_key=WEm5yVqEeydUvUmKoSA5uOOpRNgEJTedmEhxepPu";
 
         $.ajax({
             url: queryURL,
@@ -215,13 +215,13 @@ $(document).ready(function() {
                 $(number).attr("id", park.fullName);
             }
         });
-        // var parkTitle = sessionStorage.getItem("parkName");
+        var parkTitle = sessionStorage.getItem("parkName");
         // $("#park-title").text(parkTitle);
 
         let alertURL =
             "https://developer.nps.gov/api/v1/alerts?q=" +
             parkTitle +
-            "&api_key=okpdhhaUCFc3HUXX3o9Zqkxf9mYCoAIaAhSIVL4p";
+            "&api_key=WEm5yVqEeydUvUmKoSA5uOOpRNgEJTedmEhxepPu";
 
         $.ajax({
             url: alertURL,
@@ -247,7 +247,7 @@ $(document).ready(function() {
         let campURL =
             "https://developer.nps.gov/api/v1/campgrounds?q=" +
             parkTitle +
-            "&api_key=okpdhhaUCFc3HUXX3o9Zqkxf9mYCoAIaAhSIVL4p";
+            "&api_key=WEm5yVqEeydUvUmKoSA5uOOpRNgEJTedmEhxepPu";
 
         $.ajax({
             url: campURL,
@@ -279,7 +279,7 @@ $(document).ready(function() {
         let QueryUrlPark =
             "https://developer.nps.gov/api/v1/parks?q=" +
             parkTitle +
-            "&api_key=okpdhhaUCFc3HUXX3o9Zqkxf9mYCoAIaAhSIVL4p";
+            "&api_key=WEm5yVqEeydUvUmKoSA5uOOpRNgEJTedmEhxepPu";
         $.ajax({
             url: QueryUrlPark,
             method: "GET"
@@ -292,7 +292,7 @@ $(document).ready(function() {
         let QueryUrlVisitor =
             "https://developer.nps.gov/api/v1/visitorcenters?q=" +
             parkTitle +
-            "&api_key=okpdhhaUCFc3HUXX3o9Zqkxf9mYCoAIaAhSIVL4p";
+            "&api_key=WEm5yVqEeydUvUmKoSA5uOOpRNgEJTedmEhxepPu";
         $.ajax({
             url: QueryUrlVisitor,
             method: "GET"
@@ -311,7 +311,7 @@ $(document).ready(function() {
         var featuredURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=okpdhhaUCFc3HUXX3o9Zqkxf9mYCoAIaAhSIVL4p";
+            "&q=National%20Park&api_key=WEm5yVqEeydUvUmKoSA5uOOpRNgEJTedmEhxepPu";
 
         $.ajax({
             url: featuredURL,
