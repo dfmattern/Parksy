@@ -146,7 +146,7 @@ $(document).ready(function() {
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6";
+            "&q=National%20Park&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
 
         $.ajax({
             url: queryURL,
@@ -179,7 +179,7 @@ $(document).ready(function() {
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6";
+            "&q=National%20Park&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
 
         $.ajax({
             url: queryURL,
@@ -194,109 +194,80 @@ $(document).ready(function() {
                 let cardTitle = "#card-title" + i;
                 let cardText = "#card-text" + i;
                 let number = "." + i;
-                let campPark = "#camp-park"
+                let campPark = "#camp-park";
 
                 $(cardTitle).text(park.fullName);
                 $(campPark).text(park.fullName);
                 $(cardText).text(park.description);
                 $(number).removeAttr("id", "hide");
                 $(number).attr("id", park.fullName);
-
             }
         });
         // var parkTitle = sessionStorage.getItem("parkName");
         // $("#park-title").text(parkTitle);
 
         let alertURL =
-            "https://developer.nps.gov/api/v1/alerts?q=" + parkTitle + "&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6"
+            "https://developer.nps.gov/api/v1/alerts?q=" +
+            parkTitle +
+            "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
 
         $.ajax({
-                url: alertURL,
-                method: "GET"
-            })
-            .done(function(alertResponse) {
-                let alertResults = alertResponse.data;
-                console.log("alert API", alertResponse);
-                let alert = alertResults[0];
+            url: alertURL,
+            method: "GET"
+        }).done(function(alertResponse) {
+            let alertResults = alertResponse.data;
+            console.log("alert API", alertResponse);
+            let alert = alertResults[0];
 
-                if (alertResponse.total == 0) {
-                    $("#caution-alert").hide();
-                    $("#info-alert").hide();
-
-
-                } else {
-
-
-                    // console.log("alert for loop", alert.title);
-                    let alertCaution = "#alert0";
-                    let alertInfo = "#alert1";
-                    $(alertCaution).text(alert.title);
-                    $(alertInfo).text(alert.description);
-                    // console.log("alert message here", alertData)
-                }
-
-
-
-            })
-
-
-
-
+            if (alertResponse.total == 0) {
+                $("#caution-alert").hide();
+                $("#info-alert").hide();
+            } else {
+                // console.log("alert for loop", alert.title);
+                let alertCaution = "#alert0";
+                let alertInfo = "#alert1";
+                $(alertCaution).text(alert.title);
+                $(alertInfo).text(alert.description);
+                // console.log("alert message here", alertData)
+            }
+        });
 
         let campURL =
-            "https://developer.nps.gov/api/v1/campgrounds?q=" + parkTitle + "&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6"
-
+            "https://developer.nps.gov/api/v1/campgrounds?q=" +
+            parkTitle +
+            "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
 
         $.ajax({
-                url: campURL,
-                method: "GET"
+            url: campURL,
+            method: "GET"
+        }).done(function(campResponse) {
+            let campResults = campResponse.data;
+            console.log("campgrounds API", campResponse);
+            let camp = campResults[0];
 
-            })
-            .done(function(campResponse) {
-                let campResults = campResponse.data;
-                console.log("campgrounds API", campResponse);
-                let camp = campResults[0];
+            if (campResponse.total == 0) {
+                $("#camp-header").hide();
+                $("#camp-div").hide();
+                $("#camp-hr").hide();
+            } else {
+                let campName = "#camp-name";
+                let campInfo = "#camp-info";
+                let campPageName = "#camp-title";
+                let campDesc = "#description";
 
-                console.log("The campURL: ", campURL)
-
-                if (campResponse.total == 0) {
-                    $("#camp-header").hide();
-                    $("#camp-div").hide();
-                    $("#camp-hr").hide();
-
-
-
-
-
-                } else {
-
-
-
-                    let campName = "#camp-name";
-                    let campInfo = "#camp-info";
-                    let campPageName = "#camp-title";
-                    let campDesc = "#description";
-
-                    $(campName).text(camp.name);
-                    $(campInfo).text(camp.description);
-
-                    $(campDesc).text(camp.description);
-                    $(campPageName).text(camp.name);
-
-
-
-                }
-
-
-
-            })
-
-
-
+                $(campName).text(camp.name);
+                $(campInfo).text(camp.description);
+                $(campDesc).text(camp.description);
+                $(campPageName).text(camp.name);
+            }
+        });
 
         var parkTitle = sessionStorage.getItem("parkName");
         $("#park-title").text(parkTitle);
-        let QueryUrlPark = "https://developer.nps.gov/api/v1/parks?q=" + parkTitle + "&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6";
+        let QueryUrlPark =
+            "https://developer.nps.gov/api/v1/parks?q=" +
+            parkTitle +
+            "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
         $.ajax({
             url: QueryUrlPark,
             method: "GET"
@@ -306,7 +277,10 @@ $(document).ready(function() {
             $("#weather").text(response.data[0].weatherInfo);
             $("#description").text(response.data[0].description);
         });
-        let QueryUrlVisitor = "https://developer.nps.gov/api/v1/visitorcenters?q=" + parkTitle + "&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6";
+        let QueryUrlVisitor =
+            "https://developer.nps.gov/api/v1/visitorcenters?q=" +
+            parkTitle +
+            "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
         $.ajax({
             url: QueryUrlVisitor,
             method: "GET"
@@ -317,9 +291,6 @@ $(document).ready(function() {
         });
     }
 
-
-
-
     var stateArray = ["CO", "MN", "OH", "NY", "NM"];
     for (let i = 6; i < 9; i++) {
         let j = Math.floor(Math.random() * 4);
@@ -328,39 +299,36 @@ $(document).ready(function() {
         var featuredURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6";
+            "&q=National%20Park&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
 
         $.ajax({
-                url: featuredURL,
-                method: "GET"
-            })
-            .done(function(response) {
-                //console.log(response);
+            url: featuredURL,
+            method: "GET"
+        }).done(function(response) {
+            //console.log(response);
 
+            let results = response.data;
+            //console.log(results);
+            let randomPark = Math.floor(Math.random() * results.length);
 
-                let results = response.data;
-                //console.log(results);
-                let randomPark = Math.floor(Math.random() * results.length);
+            let featuredPark = results[randomPark];
 
-                let featuredPark = results[randomPark];
+            //console.log(featuredPark);
+            let cardTitle = featuredPark.fullName;
 
-                //console.log(featuredPark);
-                let cardTitle = featuredPark.fullName;
+            //console.log(cardTitle);
+            let cardText = featuredPark.description;
+            //console.log(cardText);
 
-
-                //console.log(cardTitle);
-                let cardText = featuredPark.description;
-                //console.log(cardText);
-
-                let randomCard = "#card-title" + i;
-                // console.log(randomCard)
-                let randomText = "#card-text" + i;
-                let number = "." + i;
-                //console.log(randomText)
-                $(randomCard).text(cardTitle);
-                $(randomText).text(cardText);
-                $(number).attr("id", featuredPark.fullName);
-            });
+            let randomCard = "#card-title" + i;
+            // console.log(randomCard)
+            let randomText = "#card-text" + i;
+            let number = "." + i;
+            //console.log(randomText)
+            $(randomCard).text(cardTitle);
+            $(randomText).text(cardText);
+            $(number).attr("id", featuredPark.fullName);
+        });
     }
     let imageURL =
         "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
@@ -373,45 +341,23 @@ $(document).ready(function() {
         method: "GET"
     }).done(function(response) {
         console.log(response);
-        let imageArray = response.RECDATA;
-        console.log(imageArray);
+        let primaryImage;
 
-        for (let i = 0; i < imageArray.length; i++); {
-            let images = imageArray[i];
-            //console.log(imageArray);
-            let primaryImage = images.Med["Image"];
-            console.log(primaryImage);
+        for (let i = 0; i < response.RECDATA.length; i++) {
+            if (response.RECDATA[i].IsPrimary) {
+                primaryImage = response.RECDATA[i];
+                console.log(primaryImage);
+                displayImageURL = primaryImage.URL;
+                console.log(displayImageURL);
+                // $('.displayImage').attr('src',displayImageURL)
 
+                $('#park-jumbo').css('background', "url(" + displayImageURL + ")").css("background-repeat", "no-repeat").css("background-size", "cover");
 
+            }
         }
-        //console.log(response);
-
-        //getNestedImage();
-        //console.log(primaryImage);
-
-        //if (response.RECDATA.IsPrimary === true){
-        //console.log("true");
-        // }{}
-
-        //for(let i = 0; i < 3;i++){
-        // let primaryImage = response.RECDATA[0].URL;
-        // let imgNumber = "#img"+ i;
-        //$(imgNumber).attr("src", primaryImage);
-        //console.log(primaryImage);
-        // }
 
 
-    })
+    });
+
+
 });
-
-//let dad;
-//for (let i = 0; i < data.length; i++){
-//  if (data[i].isDaada){
-//    dad= data[i];
-//}
-//let dads =data.filter(person =>{
-//  return person.isDad
-//console.log(dads[0]);
-
-//})
-//}
