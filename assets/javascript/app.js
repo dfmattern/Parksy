@@ -66,18 +66,18 @@ $(document).ready(function() {
 
     function parseURLParameter(parameter) {
         var fullURL = window.location.search.substring(1);
-        var parametersArray = fullURL.split('&');
+        var parametersArray = fullURL.split("&");
         for (var i = 0; i < parametersArray.length; i++) {
-            var currentParameter = parametersArray[i].split('=');
+            var currentParameter = parametersArray[i].split("=");
             if (currentParameter[0] == parameter) {
                 return currentParameter[1];
             }
         }
     }
-    var parkTitle = parseURLParameter('park');
-    console.log("PARKTITLE: ", parkTitle)
+    var parkTitle = parseURLParameter("park");
+    console.log("PARKTITLE: ", parkTitle);
     if (parkTitle == null) {} else {
-        parkTitle = parkTitle.replace(/[^\w\s]/gi, ' ').replace(/[0-9]/g, '');
+        parkTitle = parkTitle.replace(/[^\w\s]/gi, " ").replace(/[0-9]/g, "");
     }
 
     $("#park-title").text(parkTitle);
@@ -104,13 +104,13 @@ $(document).ready(function() {
     });
 
     $(".park").on("click", function() {
-        parkTitle = $(this).attr("id")
+        parkTitle = $(this).attr("id");
         window.location = "parkpage.html?park=" + parkTitle;
     });
 
     $("#link-camp-info").on("click", function() {
         window.location = "campgroundpage.html?park=" + parkTitle;
-    })
+    });
 
     //like function
     $("#like-btn").on("click", function(event) {
@@ -261,7 +261,7 @@ $(document).ready(function() {
         }).done(function(campResponse) {
             let campResults = campResponse.data;
 
-            console.log("CAMPURL: ", campURL)
+            console.log("CAMPURL: ", campURL);
             console.log("campgrounds API", campResponse);
             let camp = campResults[0];
 
@@ -275,12 +275,14 @@ $(document).ready(function() {
                 let campPageName = "#camp-title";
                 let campDesc = "#description";
                 let campFeatures = "#sites";
+                let campHours = "#camp-hours"
 
                 $(campName).text(camp.name);
                 $(campInfo).text(camp.description);
                 $(campDesc).text(camp.description);
                 $(campPageName).text(camp.name);
-                // $(campFeatures).text(camp.data[0].)
+                $(campFeatures).text(camp.campsites.totalsites);
+                $(campHours).text(camp.regulationsoverview)
             }
         });
 
@@ -371,10 +373,12 @@ $(document).ready(function() {
                 console.log(displayImageURL);
                 // $('.displayImage').attr('src',displayImageURL)
 
-                $('#park-jumbo').css('background', "url(" + displayImageURL + ")").css("background-repeat", "no-repeat").css("background-size", "cover");
-
-            }
-            else { (response.RECDATA[i].imageURL)
+                $("#park-jumbo")
+                    .css("background", "url(" + displayImageURL + ")")
+                    .css("background-repeat", "no-repeat")
+                    .css("background-size", "cover");
+            } else {
+                response.RECDATA[i].imageURL;
                 secondaryImage = response.RECDATA[i];
                 //console.log(secondaryImage);
                 imageURL = secondaryImage.URL;
@@ -387,14 +391,11 @@ $(document).ready(function() {
                 $("#img0", "img1", "img3").css("background", "url(" + randomParkImage +")");
                 
 
-            
-                
+
+
+
+
             }
-        
         }
-
-
     });
-
-
 });
