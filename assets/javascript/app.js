@@ -87,7 +87,7 @@ $(document).ready(function() {
         console.log(likes);
     });
     $(".card").on("click", function() {
-        sessionStorage.setItem("parkName", $(".card").attr("id"));
+        sessionStorage.setItem("parkName", $(this).attr("id"));
     });
 
     //like function
