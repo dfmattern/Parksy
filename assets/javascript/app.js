@@ -316,14 +316,33 @@ $(document).ready(function () {
         url: imageURL,
         method: "GET"
     }).done(function (response) {
-        //console.log(response);
+        console.log(response);
+        let imageArray = response.RECDATA;
+        console.log(imageArray);
+        
+for (let i = 0; i <imageArray.length; i++);{
+    let images = imageArray[i];
+    //console.log(imageArray);
+    let primaryImage = images.Med["Image"];
+    console.log(primaryImage);
 
-        console.log(response.RECDATA[0]);
-        for(let i = 0; i < 3;i++){
-            let primaryImage = response.RECDATA[0].URL;
-            let imgNumber = "#img"+ i;
-            $(imgNumber).attr("src", primaryImage);
-        }
+    
+}
+        //console.log(response);
+        
+        //getNestedImage();
+        //console.log(primaryImage);
+
+        //if (response.RECDATA.IsPrimary === true){
+            //console.log("true");
+       // }{}
+
+        //for(let i = 0; i < 3;i++){
+           // let primaryImage = response.RECDATA[0].URL;
+           // let imgNumber = "#img"+ i;
+            //$(imgNumber).attr("src", primaryImage);
+            //console.log(primaryImage);
+       // }
 
 
     })
