@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     //console.log("ready");
 
     //Initialize Firebase
@@ -24,6 +24,8 @@ $(document).ready(function () {
     let parkDescription;
     let parkImage;
     let likes;
+    var parkTitle = sessionStorage.getItem("parkName");
+    $("#park-title").text(parkTitle);
     let allStateCords = [
         "61.370716,-152.404419",
         "34.969704,-92.373123",
@@ -66,17 +68,17 @@ $(document).ready(function () {
 
     populatePage();
 
-    $("#state").on("change", function () {
+    $("#state").on("change", function() {
         codeNumber = $("#state").val();
         parkNumber = codeNumber.replace(/^\D+/g, "");
         stateCode = codeNumber.replace(/[0-9]/g, "");
         sessionStorage.setItem("stateNumber", parkNumber);
         sessionStorage.setItem("stateCode", stateCode);
         stateCode = sessionStorage.getItem("stateCode");
-       window.location = "stateselect.html";
+        window.location = "stateselect.html";
         //console.log(stateCode);
     });
-    database.ref().on("value", function (snapshot) {
+    database.ref().on("value", function(snapshot) {
         console.log(snapshot.val());
         likes = snapshot.val().likes;
         if (!likes) {
@@ -84,12 +86,12 @@ $(document).ready(function () {
         }
         console.log(likes);
     });
-    $(".card").on("click", function (){
-        sessionStorage.setItem("parkName" , $(".card").attr("id"));
+    $(".card").on("click", function() {
+        sessionStorage.setItem("parkName", $(this).attr("id"));
     });
 
     //like function
-    $("#like-btn").on("click", function (event) {
+    $("#like-btn").on("click", function(event) {
         event.preventDefault();
         parkName = $("#park-title")
             .text()
@@ -114,7 +116,7 @@ $(document).ready(function () {
     $.ajax({
         url: webCam,
         method: "GET"
-    }).then(function (response) {
+    }).then(function(response) {
         //console.log(response);
         $("#liveWebcam").attr(
             "src",
@@ -138,23 +140,23 @@ $(document).ready(function () {
 
     function populatePage() {
         $("#state-title").text(stateCode);
-        console.log("something");
+        //console.log("something");
         var parkTitle = sessionStorage.getItem("parkName");
         $("#park-title").text(parkTitle);
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
+            "&q=National%20Park&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
 
         $.ajax({
             url: queryURL,
             method: "GET"
-        }).done(function (response) {
+        }).done(function(response) {
             let results = response.data;
-            console.log(response);
+            //console.log(response);
             //console.log(results);
             for (i = 0; i < response.data.length; i++) {
-                console.log("hi");
+                // console.log("hi");
                 let park = results[i];
                 let cardTitle = "#card-title" + i;
                 let cardText = "#card-text" + i;
@@ -165,25 +167,163 @@ $(document).ready(function () {
                 $(number).attr("id", park.name);
             }
         });
-        var parkTitle = sessionStorage.getItem("parkName");
-        $("#park-title").text(parkTitle);
+        // var parkTitle = sessionStorage.getItem("parkName");
+        //$("#park-title").text(parkTitle);
     }
 
+    function populatePage() {
+        $("#state-title").text(stateCode);
+        console.log("something");
+        var parkTitle = sessionStorage.getItem("parkName");
+        $("#park-title").text(parkTitle);
+        let queryURL =
+            "https://developer.nps.gov/api/v1/parks?stateCode=" +
+            stateCode +
+            "&q=National%20Park&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).done(function(response) {
+            let results = response.data;
+            console.log("parks", response);
+            console.log(results);
+            for (i = 0; i < response.data.length; i++) {
+                // console.log("hi");
+                let park = results[i];
+                let cardTitle = "#card-title" + i;
+                let cardText = "#card-text" + i;
+                let number = "." + i;
+                let campPark = "#camp-park"
+
+                $(cardTitle).text(park.fullName);
+                $(campPark).text(park.fullName);
+                $(cardText).text(park.description);
+                $(number).removeAttr("id", "hide");
+                $(number).attr("id", park.fullName);
+
+            }
+        });
+        // var parkTitle = sessionStorage.getItem("parkName");
+        // $("#park-title").text(parkTitle);
+
+        let alertURL =
+            "https://developer.nps.gov/api/v1/alerts?q=" + parkTitle + "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0"
+
+        $.ajax({
+                url: alertURL,
+                method: "GET"
+            })
+            .done(function(alertResponse) {
+                let alertResults = alertResponse.data;
+                console.log("alert API", alertResponse);
+                let alert = alertResults[0];
+
+                if (alertResponse.total == 0) {
+                    $("#caution-alert").hide();
+                    $("#info-alert").hide();
+
+
+                } else {
+
+
+                    // console.log("alert for loop", alert.title);
+                    let alertCaution = "#alert0";
+                    let alertInfo = "#alert1";
+                    $(alertCaution).text(alert.title);
+                    $(alertInfo).text(alert.description);
+                    // console.log("alert message here", alertData)
+                }
+
+
+
+            })
+
+        let campURL =
+            "https://developer.nps.gov/api/v1/campgrounds?q=" + parkTitle + "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0"
+
+        $.ajax({
+                url: campURL,
+                method: "GET"
+            })
+            .done(function(campResponse) {
+                let campResults = campResponse.data;
+                console.log("campgrounds API", campResponse);
+                let camp = campResults[0];
+
+                if (campResponse.total == 0) {
+                    $("#camp-header").hide();
+                    $("#camp-div").hide();
+                    $("#camp-hr").hide();
+
+
+                } else {
+
+
+
+                    let campName = "#camp-name";
+                    let campInfo = "#camp-info";
+                    let campPageName = "#camp-title";
+                    let campDesc = "#description";
+
+                    $(campName).text(camp.name);
+                    $(campInfo).text(camp.description);
+                    $(campDesc).text(camp.description);
+                    $(campPageName).text(camp.name);
+
+
+
+                }
+
+
+
+            })
+
+
+
+
+        var parkTitle = sessionStorage.getItem("parkName");
+        $("#park-title").text(parkTitle);
+        let QueryUrlPark = "https://developer.nps.gov/api/v1/parks?q=" + parkTitle + "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
+        $.ajax({
+            url: QueryUrlPark,
+            method: "GET"
+        }).then(function(response) {
+            console.log(response);
+            $("#parkDirections").text(response.data[0].directionsInfo);
+            $("#weather").text(response.data[0].weatherInfo);
+            $("#description").text(response.data[0].description);
+        });
+        let QueryUrlVisitor = "https://developer.nps.gov/api/v1/visitorcenters?q=" + parkTitle + "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
+        $.ajax({
+            url: QueryUrlVisitor,
+            method: "GET"
+        }).then(function(response) {
+            console.log(response);
+            $("#centerName").text(response.data[0].name);
+            $("#centerInfo").text(response.data[0].description);
+        });
+    }
+
+
+
+
     var stateArray = ["CO", "MN", "OH", "NY", "NM"];
-    for (let i = 0; i < 3; i++) {
-        let stateCode = stateArray[i];
+    for (let i = 6; i < 9; i++) {
+        let j = Math.floor(Math.random() * 4);
+        let stateCode = stateArray[j];
 
         var featuredURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=mmnZ3oHc5B6EBEiihQUWhMb7QOocZRIgj8IploIN";
+            "&q=National%20Park&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
 
         $.ajax({
-            url: featuredURL,
-            method: "GET"
-        })
-            .done(function (response) {
-                console.log(response);
+                url: featuredURL,
+                method: "GET"
+            })
+            .done(function(response) {
+                //console.log(response);
 
 
                 let results = response.data;
@@ -201,16 +341,65 @@ $(document).ready(function () {
                 //console.log(cardText);
 
                 let randomCard = "#card-title" + i;
-                console.log(randomCard)
+                // console.log(randomCard)
                 let randomText = "#card-text" + i;
-                console.log(randomText)
+                let number = "." + i;
+                //console.log(randomText)
                 $(randomCard).text(cardTitle);
                 $(randomText).text(cardText);
-                console.log("End of Loop")
-
-
-
+                $(number).attr("id", featuredPark.fullName);
             });
-        console.log("this is the i", i);
     }
+    let imageURL =
+        "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
+        parkTitle +
+        "&limit=50&apikey=27b8c6d8-739a-4df3-a008-21aa585669b9";
+    //console.log(imageURL);
+
+    $.ajax({
+        url: imageURL,
+        method: "GET"
+    }).done(function(response) {
+        console.log(response);
+        let imageArray = response.RECDATA;
+        console.log(imageArray);
+
+        for (let i = 0; i < imageArray.length; i++); {
+            let images = imageArray[i];
+            //console.log(imageArray);
+            let primaryImage = images.Med["Image"];
+            console.log(primaryImage);
+
+
+        }
+        //console.log(response);
+
+        //getNestedImage();
+        //console.log(primaryImage);
+
+        //if (response.RECDATA.IsPrimary === true){
+        //console.log("true");
+        // }{}
+
+        //for(let i = 0; i < 3;i++){
+        // let primaryImage = response.RECDATA[0].URL;
+        // let imgNumber = "#img"+ i;
+        //$(imgNumber).attr("src", primaryImage);
+        //console.log(primaryImage);
+        // }
+
+
+    })
 });
+
+//let dad;
+//for (let i = 0; i < data.length; i++){
+  //  if (data[i].isDaada){
+    //    dad= data[i];
+    }
+    //let dads =data.filter(person =>{
+      //  return person.isDad
+        //console.log(dads[0]);
+        
+    })
+}
