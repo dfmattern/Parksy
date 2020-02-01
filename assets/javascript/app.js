@@ -254,6 +254,8 @@ $(document).ready(function() {
             method: "GET"
         }).done(function(campResponse) {
             let campResults = campResponse.data;
+
+            console.log("CAMPURL: ", campURL)
             console.log("campgrounds API", campResponse);
             let camp = campResults[0];
 
@@ -301,7 +303,7 @@ $(document).ready(function() {
         });
     }
 
-    var stateArray = ["CO", "MN", "OH", "NY", "NM"];
+    var stateArray = ["CO", "AK", "CA", "NY", "NM"];
     for (let i = 6; i < 9; i++) {
         let j = Math.floor(Math.random() * 4);
         let stateCode = stateArray[j];
