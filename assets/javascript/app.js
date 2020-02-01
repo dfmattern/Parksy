@@ -360,23 +360,23 @@ $(document).ready(function() {
   let imageURL =
     "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
     parkTitle +
-    "&limit=50&apikey=27b8c6d8-739a-4df3-a008-21aa585669b9";
+    "&limit=50&apikey=a0796ac9-3e47-4c89-82a8-1c15cc1f557c";
   //console.log(imageURL);
 
   $.ajax({
     url: imageURL,
     method: "GET"
   }).done(function(response) {
-    console.log(response);
+    //console.log(response);
     let primaryImage;
 
     for (let i = 0; i < response.RECDATA.length; i++) {
       if (response.RECDATA[i].IsPrimary) {
         primaryImage = response.RECDATA[i];
-        console.log(primaryImage);
+        //console.log(primaryImage);
         displayImageURL = primaryImage.URL;
-        console.log(displayImageURL);
-        // $('.displayImage').attr('src',displayImageURL)
+        //console.log(displayImageURL);
+      
 
         $("#park-jumbo")
                     .css("background", "url(" + displayImageURL + ")")
@@ -390,10 +390,12 @@ $(document).ready(function() {
                 //console.log(imageURL);
                 let secondaryImageArr = [];
                 secondaryImageArr.push(imageURL);
-                console.log(secondaryImageArr);
+                //console.log(secondaryImageArr);
                 let randomParkImage = secondaryImageArr[Math.floor(Math.random() * secondaryImageArr.length)];
-                //console.log(randomParkImage);
-                $("#img0", "img1", "img3").css("background", "url(" + randomParkImage +")");
+                console.log(randomParkImage);
+               
+                
+                //$("#img0").css("background", "url(" + imageURL +")");
       }
     }
   });
