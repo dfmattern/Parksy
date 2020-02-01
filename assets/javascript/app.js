@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     //console.log("ready");
 
     //Initialize Firebase
@@ -68,7 +68,7 @@ $(document).ready(function () {
 
     populatePage();
 
-    $("#state").on("change", function () {
+    $("#state").on("change", function() {
         codeNumber = $("#state").val();
         parkNumber = codeNumber.replace(/^\D+/g, "");
         stateCode = codeNumber.replace(/[0-9]/g, "");
@@ -78,7 +78,7 @@ $(document).ready(function () {
         window.location = "stateselect.html";
         //console.log(stateCode);
     });
-    database.ref().on("value", function (snapshot) {
+    database.ref().on("value", function(snapshot) {
         console.log(snapshot.val());
         likes = snapshot.val().likes;
         if (!likes) {
@@ -86,12 +86,12 @@ $(document).ready(function () {
         }
         console.log(likes);
     });
-    $(".card").on("click", function () {
+    $(".card").on("click", function() {
         sessionStorage.setItem("parkName", $(this).attr("id"));
     });
 
     //like function
-    $("#like-btn").on("click", function (event) {
+    $("#like-btn").on("click", function(event) {
         event.preventDefault();
         parkName = $("#park-title")
             .text()
@@ -116,7 +116,7 @@ $(document).ready(function () {
     $.ajax({
         url: webCam,
         method: "GET"
-    }).then(function (response) {
+    }).then(function(response) {
         //console.log(response);
         $("#liveWebcam").attr(
             "src",
@@ -151,7 +151,7 @@ $(document).ready(function () {
         $.ajax({
             url: queryURL,
             method: "GET"
-        }).done(function (response) {
+        }).done(function(response) {
             let results = response.data;
             //console.log(response);
             //console.log(results);
@@ -184,7 +184,7 @@ $(document).ready(function () {
         $.ajax({
             url: queryURL,
             method: "GET"
-        }).done(function (response) {
+        }).done(function(response) {
             let results = response.data;
             console.log(response);
             console.log(results);
@@ -209,10 +209,10 @@ $(document).ready(function () {
             "https://developer.nps.gov/api/v1/alerts?q=" + parkTitle + "&api_key=okpdhhaUCFc3HUXX3o9Zqkxf9mYCoAIaAhSIVL4p"
 
         $.ajax({
-            url: alertURL,
-            method: "GET"
-        })
-            .done(function (alertResponse) {
+                url: alertURL,
+                method: "GET"
+            })
+            .done(function(alertResponse) {
                 let alertResults = alertResponse.data;
                 console.log("alert API", alertResponse);
                 let alert = alertResults[0];
@@ -237,6 +237,39 @@ $(document).ready(function () {
 
             })
 
+        let campURL =
+            "https://developer.nps.gov/api/v1/campgrounds?q=" + parkTitle + "&api_key=Qi1l7RGg8L012c2zlvVaRifjxRfmd3x1xSi1CPnh"
+
+        $.ajax({
+                url: campURL,
+                method: "GET"
+            })
+            .done(function(campResponse) {
+                let campResults = campResponse.data;
+                console.log("campgrounds API", campResponse);
+                let camp = campResults[0];
+
+                if (campResponse.total == 0) {
+                    $("#camp-header").hide();
+                    $("#camp-div").hide();
+                    $("#camp-hr").hide();
+
+
+                } else {
+
+
+                    // console.log("alert for loop", alert.title);
+                    let campName = "#camp-name";
+                    let campInfo = "#camp-info";
+                    $(campName).text(camp.name);
+                    $(campInfo).text(camp.description);
+                    // console.log("alert message here", alertData)
+                }
+
+
+
+            })
+
 
         var parkTitle = sessionStorage.getItem("parkName");
         $("#park-title").text(parkTitle);
@@ -244,7 +277,7 @@ $(document).ready(function () {
         $.ajax({
             url: QueryUrlPark,
             method: "GET"
-        }).then(function (response) {
+        }).then(function(response) {
             console.log(response);
             $("#parkDirections").text(response.data[0].directionsInfo);
             $("#weather").text(response.data[0].weatherInfo);
@@ -254,7 +287,7 @@ $(document).ready(function () {
         $.ajax({
             url: QueryUrlVisitor,
             method: "GET"
-        }).then(function (response) {
+        }).then(function(response) {
             console.log(response);
             $("#centerName").text(response.data[0].name);
             $("#centerInfo").text(response.data[0].description);
@@ -275,10 +308,10 @@ $(document).ready(function () {
             "&q=National%20Park&api_key=okpdhhaUCFc3HUXX3o9Zqkxf9mYCoAIaAhSIVL4p";
 
         $.ajax({
-            url: featuredURL,
-            method: "GET"
-        })
-            .done(function (response) {
+                url: featuredURL,
+                method: "GET"
+            })
+            .done(function(response) {
                 //console.log(response);
 
 
@@ -315,13 +348,13 @@ $(document).ready(function () {
     $.ajax({
         url: imageURL,
         method: "GET"
-    }).done(function (response) {
+    }).done(function(response) {
         //console.log(response);
 
         console.log(response.RECDATA[0]);
-        for(let i = 0; i < 3;i++){
+        for (let i = 0; i < 3; i++) {
             let primaryImage = response.RECDATA[0].URL;
-            let imgNumber = "#img"+ i;
+            let imgNumber = "#img" + i;
             $(imgNumber).attr("src", primaryImage);
         }
 
