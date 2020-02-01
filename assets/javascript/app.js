@@ -146,7 +146,7 @@ $(document).ready(function() {
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
+            "&q=National%20Park&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6";
 
         $.ajax({
             url: queryURL,
@@ -179,7 +179,7 @@ $(document).ready(function() {
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
+            "&q=National%20Park&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6";
 
         $.ajax({
             url: queryURL,
@@ -208,7 +208,7 @@ $(document).ready(function() {
         // $("#park-title").text(parkTitle);
 
         let alertURL =
-            "https://developer.nps.gov/api/v1/alerts?q=" + parkTitle + "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0"
+            "https://developer.nps.gov/api/v1/alerts?q=" + parkTitle + "&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6"
 
         $.ajax({
                 url: alertURL,
@@ -239,22 +239,33 @@ $(document).ready(function() {
 
             })
 
+
+
+
+
         let campURL =
-            "https://developer.nps.gov/api/v1/campgrounds?q=" + parkTitle + "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0"
+            "https://developer.nps.gov/api/v1/campgrounds?q=" + parkTitle + "&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6"
+
 
         $.ajax({
                 url: campURL,
                 method: "GET"
+
             })
             .done(function(campResponse) {
                 let campResults = campResponse.data;
                 console.log("campgrounds API", campResponse);
                 let camp = campResults[0];
 
+                console.log("The campURL: ", campURL)
+
                 if (campResponse.total == 0) {
                     $("#camp-header").hide();
                     $("#camp-div").hide();
                     $("#camp-hr").hide();
+
+
+
 
 
                 } else {
@@ -268,6 +279,7 @@ $(document).ready(function() {
 
                     $(campName).text(camp.name);
                     $(campInfo).text(camp.description);
+
                     $(campDesc).text(camp.description);
                     $(campPageName).text(camp.name);
 
@@ -284,7 +296,7 @@ $(document).ready(function() {
 
         var parkTitle = sessionStorage.getItem("parkName");
         $("#park-title").text(parkTitle);
-        let QueryUrlPark = "https://developer.nps.gov/api/v1/parks?q=" + parkTitle + "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
+        let QueryUrlPark = "https://developer.nps.gov/api/v1/parks?q=" + parkTitle + "&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6";
         $.ajax({
             url: QueryUrlPark,
             method: "GET"
@@ -294,7 +306,7 @@ $(document).ready(function() {
             $("#weather").text(response.data[0].weatherInfo);
             $("#description").text(response.data[0].description);
         });
-        let QueryUrlVisitor = "https://developer.nps.gov/api/v1/visitorcenters?q=" + parkTitle + "&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
+        let QueryUrlVisitor = "https://developer.nps.gov/api/v1/visitorcenters?q=" + parkTitle + "&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6";
         $.ajax({
             url: QueryUrlVisitor,
             method: "GET"
@@ -316,7 +328,7 @@ $(document).ready(function() {
         var featuredURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=XtaYztUtVKSkEzwqPZePcIb8TkUIqSaCquxIrKm0";
+            "&q=National%20Park&api_key=6DEf7bXMsV2gdWWys7HVPjneawQnoR4x6o3xwDd6";
 
         $.ajax({
                 url: featuredURL,
@@ -394,12 +406,12 @@ $(document).ready(function() {
 
 //let dad;
 //for (let i = 0; i < data.length; i++){
-  //  if (data[i].isDaada){
-    //    dad= data[i];
-    //}
-    //let dads =data.filter(person =>{
-      //  return person.isDad
-        //console.log(dads[0]);
-        
-    //})
+//  if (data[i].isDaada){
+//    dad= data[i];
+//}
+//let dads =data.filter(person =>{
+//  return person.isDad
+//console.log(dads[0]);
+
+//})
 //}
