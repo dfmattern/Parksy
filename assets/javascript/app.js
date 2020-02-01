@@ -374,6 +374,20 @@ $(document).ready(function() {
                 $('#park-jumbo').css('background', "url(" + displayImageURL + ")").css("background-repeat", "no-repeat").css("background-size", "cover");
 
             }
+            else { (response.RECDATA[i].imageURL)
+                secondaryImage = response.RECDATA[i];
+                console.log(secondaryImage);
+                imageURL = secondaryImage.URL;
+                console.log(imageURL);
+                let secondaryImageArr = [];
+                secondaryImageArr.push(imageURL);
+                console.log(secondaryImageArr);
+                
+
+            
+                
+            }
+        
         }
 
 
