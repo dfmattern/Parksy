@@ -351,7 +351,7 @@ $(document).ready(function() {
         console.log(displayImageURL);
        // $('.displayImage').attr('src',displayImageURL)
         
-        $('#park-jumbo').css('background', "url(" + displayImageURL + ")").css("background-repeat", "no-repeat");
+        $('#park-jumbo').css('background', "url(" + displayImageURL + ")").css("background-repeat", "no-repeat").css("background-size", "cover");
         
       }
     }
