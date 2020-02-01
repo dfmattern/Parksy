@@ -181,3 +181,6 @@
         #hide {
             display: none;
         }
+        .park:hover {
+            cursor: pointer;
+        }
