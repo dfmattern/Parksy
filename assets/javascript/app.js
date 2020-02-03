@@ -370,7 +370,7 @@ $(document).ready(function() {
     let imageURL =
         "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
         parkTitle +
-        "&limit=50&apikey=27b8c6d8-739a-4df3-a008-21aa585669b9";
+        "&limit=50&apikey=414ef03d-45c7-4152-a429-00721f747310";
     //console.log(imageURL);
 
     $.ajax({
@@ -383,7 +383,7 @@ $(document).ready(function() {
         for (let i = 0; i < response.RECDATA.length; i++) {
             if (response.RECDATA[i].IsPrimary) {
                 primaryImage = response.RECDATA[i];
-                console.log(primaryImage);
+                //console.log(primaryImage);
                 displayImageURL = primaryImage.URL;
                 console.log(displayImageURL);
                 // $('.displayImage').attr('src',displayImageURL)
@@ -393,18 +393,23 @@ $(document).ready(function() {
                     .css("background-repeat", "no-repeat")
                     .css("background-size", "cover");
             } else {
-                response.RECDATA[i].imageURL;
+                response.RECDATA[i].IsGallery;
                 secondaryImage = response.RECDATA[i];
-                //console.log(secondaryImage);
-                imageURL = secondaryImage.URL;
-                //console.log(imageURL);
-                let secondaryImageArr = [];
-                secondaryImageArr.push(imageURL);
-                //console.log(secondaryImageArr);
-                let randomParkImage = secondaryImageArr[Math.floor(Math.random() * secondaryImageArr.length)];
-                //console.log(randomParkImage);
-                $("#img0", "img1", "img3").css("background", "url(" + randomParkImage + ")");
+                console.log(secondaryImage);
+                secDispURL = secondaryImage.URL;
+                //console.log(secDispURL);
+                //urlArr= [];
+               // urlArr.push(secDispURL);
+                //console.log(urlArr);
+                $("#img0").css("background", "url(" + secDispURL + ")");
+                
+               
+                    
+                
+                //$("#img0").css("background", "url(" + randomParkImage[i] + ")");
             }
         }
-    });
+    
+    
+        });
 });
