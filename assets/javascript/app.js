@@ -55,7 +55,7 @@ $(document).ready(function() {
     ];
 
     console.log("variables set, ALL State Coordinates:", allStateCords);
-
+    // This function parses the url and finds the parameter that you are looking for
     function parseURLParameter(parameter) {
         var fullURL = window.location.search.substring(1);
         var parametersArray = fullURL.split("&");
@@ -66,6 +66,8 @@ $(document).ready(function() {
             }
         }
     }
+    // end of the parse function
+
     var parkTitle = parseURLParameter("park");
     var stateCode = parseURLParameter("state");
     var parkNumber = parseURLParameter("num");
@@ -75,6 +77,8 @@ $(document).ready(function() {
     }
 
     $("#park-title").text(parkTitle);
+
+    // grabing the url for the first ajax call later in the code
     var webCamNum = allStateCords[parkNumber];
     console.log("Web Cam Number", webCamNum);
 
@@ -82,9 +86,10 @@ $(document).ready(function() {
         "https://api.windy.com/api/webcams/v2/list/nearby=" +
         webCamNum +
         ",250?key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
-
+    // Calls the populate Page function
     populatePage();
 
+    // This code will change the window location and to obtain the correct state info
     $("#state").on("change", function() {
         codeNumber = $("#state").val();
         parkNumber = codeNumber.replace(/^\D+/g, "");
@@ -93,15 +98,17 @@ $(document).ready(function() {
             "stateselect.html?state=" + stateCode + "&num=" + parkNumber;
         //console.log(stateCode);
     });
-    database.ref().on("value", function(snapshot) {
-        console.log(snapshot.val());
-        likes = snapshot.val().likes;
-        if (!likes) {
-            likes = [];
-        }
-        console.log(likes);
-    });
+    // Future development 
+    // database.ref().on("value", function(snapshot) {
+    //     console.log(snapshot.val());
+    //     likes = snapshot.val().likes;
+    //     if (!likes) {
+    //         likes = [];
+    //     }
+    //     console.log(likes);
+    // });
 
+    // This code will track when we select a park card and bring us to the correct page
     $(".park").on("click", function() {
         parkTitle = $(this).attr("id");
         window.location =
@@ -117,29 +124,31 @@ $(document).ready(function() {
         window.location = "campgroundpage.html?park=" + parkTitle;
     });
 
+    // Future Development
     //like function
-    $("#like-btn").on("click", function(event) {
-        event.preventDefault();
-        parkName = $("#park-title")
-            .text()
-            .trim();
-        console.log("Park Name", parkName);
+    // $("#like-btn").on("click", function(event) {
+    //     event.preventDefault();
+    //     parkName = $("#park-title")
+    //         .text()
+    //         .trim();
+    //     console.log("Park Name", parkName);
 
-        // if park is in array, increment it
-        let foundParkIndex = likes.findIndex(park => park[parkName]);
-        if (foundParkIndex > -1) {
-            likes[foundParkIndex][parkName] = likes[foundParkIndex][parkName] + 1;
-        } else {
-            // else add it
-            likes.push({
-                [parkName]: 1
-            });
-        }
-        database.ref().set({
-            likes: likes
-        });
-    });
+    //     // if park is in array, increment it
+    //     let foundParkIndex = likes.findIndex(park => park[parkName]);
+    //     if (foundParkIndex > -1) {
+    //         likes[foundParkIndex][parkName] = likes[foundParkIndex][parkName] + 1;
+    //     } else {
+    //         // else add it
+    //         likes.push({
+    //             [parkName]: 1
+    //         });
+    //     }
+    //     database.ref().set({
+    //         likes: likes
+    //     });
+    // });
 
+    // We use our first ajax call to insert the webcams its the page.
     $.ajax({
         url: webCam,
         method: "GET"
@@ -164,7 +173,8 @@ $(document).ready(function() {
             "/day"
         );
     });
-
+    // This goes through our nps api to grab the park information
+    // to then insert it into the page
     function populatePage() {
         $("#state-title").text(stateCode);
         //console.log("something");
@@ -195,40 +205,7 @@ $(document).ready(function() {
         //var parkTitle = sessionStorage.getItem("parkName");
         //$("#park-title").text(parkTitle);
     }
-
-    function populatePage() {
-        $("#state-title").text(stateCode);
-        console.log("something");
-        let queryURL =
-            "https://developer.nps.gov/api/v1/parks?stateCode=" +
-            stateCode +
-            "&q=National%20Park&api_key=zSTjK4kUGr3YPfarWMUytzcuc1QJFKug4vzegIt0";
-
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).done(function(response) {
-            let results = response.data;
-            console.log("parks", response);
-            console.log(results);
-            for (i = 0; i < response.data.length; i++) {
-                // console.log("hi");
-                let park = results[i];
-                let cardTitle = "#card-title" + i;
-                let cardText = "#card-text" + i;
-                let number = "." + i;
-                let campPark = "#camp-park";
-
-                $(cardTitle).text(park.fullName);
-                $(campPark).text(park.fullName);
-                $(cardText).text(park.description);
-                $(number).removeAttr("id", "hide");
-                $(number).attr("id", park.fullName);
-            }
-        });
-        // var parkTitle = sessionStorage.getItem("parkName");
-        // $("#park-title").text(parkTitle);
-
+    // Our second nps api call to grab the information for our park info
         let alertURL =
             "https://developer.nps.gov/api/v1/alerts?q=" +
             parkTitle +
@@ -257,7 +234,7 @@ $(document).ready(function() {
             }
         });
 
-        //Campground call by park 
+        // Our third nps call to grab the infomation for our campground page
 
         let campURL =
             "https://developer.nps.gov/api/v1/campgrounds?q=" +
@@ -318,6 +295,7 @@ $(document).ready(function() {
             }
         });
 
+        // another call to grab information to fill in our parks page
         let QueryUrlPark =
             "https://developer.nps.gov/api/v1/parks?q=" +
             parkTitle +
@@ -343,21 +321,14 @@ $(document).ready(function() {
             $("#centerName").text(response.data[0].name);
             $("#centerInfo").text(response.data[0].description);
         });
-    }
+
+
+    // a randomizer to fill in all the information for the featured parks
     var numberArray = ["4", "0", "3", "8", "15"];
     var stateArray = ["CO", "AK", "CA", "KY", "NM"];
     var selectedStates = [];
     var important = 6;
-    //   while (important < 9) {
-    //     let j = Math.floor(Math.random() * 4);
-    //     if (selectedStates.includes((stateArray[j]))) {
-    //       continue;
-    //     }
-    //     selectedStates.push(stateArray[j]);
-    //     ++important;
-    //   }
 
-    //   console.log(selectedStates)
     while (important < 9) {
         let j = Math.floor(Math.random() * 4);
         stateCode = stateArray[j];
@@ -404,6 +375,8 @@ $(document).ready(function() {
         });
         ++important;
     }
+
+    // lastly this is where we grab our images to insert them into the site.
     let imageURL =
         "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
         parkTitle +
@@ -447,7 +420,6 @@ $(document).ready(function() {
     var gallery = ["gallery1.jpg","gallery2.jpg","gallery3.jpg","gallery4.jpg","gallery5.jpg","gallery6.jpg","gallery7.jpg","gallery8.jpg","gallery9.jpg","gallery10.jpg","gallery11.jpg","gallery12.jpg","gallery13.jpg","gallery14.jpg","gallery15.jpg","gallery16.jpg","gallery17.jpg"];
     var usedNumber= [];
     var images = 0;
-    var displays = 0;
     while (images < 6) {
         let j = Math.floor(Math.random() * 17);
         if (usedNumber.includes(gallery[j])) {
