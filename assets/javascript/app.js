@@ -438,10 +438,25 @@ $(document).ready(function() {
                 //urlArr= [];
                 // urlArr.push(secDispURL);
                 //console.log(urlArr);
-                $("#img0").attr("src", "url(" + secDispURL + ")");
+                // $("#img0").attr("src", "url(" + secDispURL + ")");
 
                
             }
         }
     });
+    var gallery = ["gallery1.jpg","gallery2.jpg","gallery3.jpg","gallery4.jpg","gallery5.jpg","gallery6.jpg","gallery7.jpg","gallery8.jpg","gallery9.jpg","gallery10.jpg","gallery11.jpg","gallery12.jpg","gallery13.jpg","gallery14.jpg","gallery15.jpg","gallery16.jpg","gallery17.jpg"];
+    var usedNumber= [];
+    var images = 0;
+    var displays = 0;
+    while (images < 6) {
+        let j = Math.floor(Math.random() * 17);
+        if (usedNumber.includes(gallery[j])) {
+            continue;
+        }
+        usedNumber.push(gallery[j]);
+        var whereToDisplay = "#img" + images;
+        console.log(gallery[j]);
+        $(whereToDisplay).attr("src", "assets/images/" + gallery[j] );
+        images++
+    }
 });
