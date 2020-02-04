@@ -183,3 +183,6 @@
         .park:hover {
             cursor: pointer;
         }
+        h6{
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
