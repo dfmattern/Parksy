@@ -438,9 +438,9 @@ $(document).ready(function() {
                 //urlArr= [];
                 // urlArr.push(secDispURL);
                 //console.log(urlArr);
-                $("#img0").css("background", "url(" + secDispURL + ")");
+                $("#img0").attr("src", "url(" + secDispURL + ")");
 
-                //$("#img0").css("background", "url(" + randomParkImage[i] + ")");
+               
             }
         }
     });
