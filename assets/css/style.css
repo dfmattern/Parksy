@@ -138,7 +138,7 @@
             margin-bottom: 30px;
         }
         
-        #camp-info {
+        #link-camp-info {
             text-decoration: none !important;
         }
         /* State Selection Page */
@@ -180,6 +180,10 @@
         #hide {
             display: none;
         }
+        
         .park:hover {
             cursor: pointer;
+        }
+        h6{
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
         }
