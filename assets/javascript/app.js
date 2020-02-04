@@ -181,7 +181,7 @@ $(document).ready(function() {
         let queryURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=TMSUQRpX5uRYI72Tuqt3cnYWlvZ08SuWgYgBjaoZ";
+            "&q=National%20Park&api_key=joATpudQd2qABHgzChXZCAMLxuY6mIqpG9MfMiXR";
 
         $.ajax({
             url: queryURL,
@@ -206,121 +206,121 @@ $(document).ready(function() {
         //$("#park-title").text(parkTitle);
     }
     // Our second nps api call to grab the information for our park info
-        let alertURL =
-            "https://developer.nps.gov/api/v1/alerts?q=" +
-            parkTitle +
-            "&api_key=e1t00p6aAfQUWf7s5twlc8UndB7wbJS55ctxLGpe";
+    let alertURL =
+        "https://developer.nps.gov/api/v1/alerts?q=" +
+        parkTitle +
+        "&api_key=L0yL36dUx3CDNFvtD7lwtnL6b08MABH5rDWu5KRo";
 
 
-        // Caution and information alerts 
-        $.ajax({
-            url: alertURL,
-            method: "GET"
-        }).done(function(alertResponse) {
-            let alertResults = alertResponse.data;
-            console.log("alert API", alertResponse);
-            let alert = alertResults[0];
+    // Caution and information alerts 
+    $.ajax({
+        url: alertURL,
+        method: "GET"
+    }).done(function(alertResponse) {
+        let alertResults = alertResponse.data;
+        console.log("alert API", alertResponse);
+        let alert = alertResults[0];
 
-            if (alertResponse.total == 0) {
-                $("#caution-alert").hide();
-                $("#info-alert").hide();
+        if (alertResponse.total == 0) {
+            $("#caution-alert").hide();
+            $("#info-alert").hide();
+        } else {
+            // console.log("alert for loop", alert.title);
+            let alertCaution = "#alert0";
+            let alertInfo = "#alert1";
+            $(alertCaution).text(alert.title);
+            $(alertInfo).text(alert.description);
+            // console.log("alert message here", alertData)
+        }
+    });
+
+    // Our third nps call to grab the infomation for our campground page
+
+    let campURL =
+        "https://developer.nps.gov/api/v1/campgrounds?q=" +
+        parkTitle +
+        "&api_key=bd6vYr0dYh1GNfF8Cgb7mzPAXL1D9b8m5QC4PNL9";
+
+    $.ajax({
+        url: campURL,
+        method: "GET"
+    }).done(function(campResponse) {
+        let campResults = campResponse.data;
+
+        console.log("CAMPURL: ", campURL);
+        console.log("campgrounds API", campResponse);
+        let camp = campResults[0];
+
+        if (campResponse.total == 0) {
+            $("#camp-header").hide();
+            $("#camp-div").hide();
+            $("#camp-hr").hide();
+        } else {
+            let campName = "#camp-name";
+            let campInfo = "#camp-info";
+            let campPageName = "#camp-title";
+            let campDesc = "#description";
+            let campFeatures = "#sites";
+            let campHours = "#camp-hours";
+            let campWeather = "#camp-weather";
+            let campAcc = "#camp-acc";
+            let campDir = "#camp-dir";
+
+            $(campName).text(camp.name);
+            $(campInfo).text(camp.description);
+            $(campDesc).text(camp.description);
+            $(campPageName).text(camp.name);
+            $(campFeatures).text(camp.campsites.totalsites);
+            $(campWeather).text(camp.weatheroverview);
+
+            if (camp.directionsoverview == "") {
+                $("#hide-dir").hide();
             } else {
-                // console.log("alert for loop", alert.title);
-                let alertCaution = "#alert0";
-                let alertInfo = "#alert1";
-                $(alertCaution).text(alert.title);
-                $(alertInfo).text(alert.description);
-                // console.log("alert message here", alertData)
+                $(campDir).text(camp.directionsoverview);
             }
-        });
-
-        // Our third nps call to grab the infomation for our campground page
-
-        let campURL =
-            "https://developer.nps.gov/api/v1/campgrounds?q=" +
-            parkTitle +
-            "&api_key=57S5HssXJaaoTz8JqcVpH8ZHJ6Sk3OHf9pzhoMab";
-
-        $.ajax({
-            url: campURL,
-            method: "GET"
-        }).done(function(campResponse) {
-            let campResults = campResponse.data;
-
-            console.log("CAMPURL: ", campURL);
-            console.log("campgrounds API", campResponse);
-            let camp = campResults[0];
-
-            if (campResponse.total == 0) {
-                $("#camp-header").hide();
-                $("#camp-div").hide();
-                $("#camp-hr").hide();
+            if (camp.regulationsoverview == "") {
+                $("#hide-op").hide();
             } else {
-                let campName = "#camp-name";
-                let campInfo = "#camp-info";
-                let campPageName = "#camp-title";
-                let campDesc = "#description";
-                let campFeatures = "#sites";
-                let campHours = "#camp-hours";
-                let campWeather = "#camp-weather";
-                let campAcc = "#camp-acc";
-                let campDir = "#camp-dir";
-
-                $(campName).text(camp.name);
-                $(campInfo).text(camp.description);
-                $(campDesc).text(camp.description);
-                $(campPageName).text(camp.name);
-                $(campFeatures).text(camp.campsites.totalsites);
-                $(campWeather).text(camp.weatheroverview);
-
-                if (camp.directionsoverview == "") {
-                    $("#hide-dir").hide();
-                } else {
-                    $(campDir).text(camp.directionsoverview);
-                }
-                if (camp.regulationsoverview == "") {
-                    $("#hide-op").hide();
-                } else {
-                    $(campHours).text(camp.regulationsoverview);
-                }
-                if (
-                    camp.accessibility.wheelchairaccess == "" &&
-                    camp.accessibility.firestovepolicy == ""
-                ) {
-                    $("#div-acc").hide();
-                } else {
-                    $(campAcc).text(camp.accessibility.wheelchairaccess);
-                    $("#fire").text(camp.accessibility.firestovepolicy);
-                }
+                $(campHours).text(camp.regulationsoverview);
             }
-        });
+            if (
+                camp.accessibility.wheelchairaccess == "" &&
+                camp.accessibility.firestovepolicy == ""
+            ) {
+                $("#div-acc").hide();
+            } else {
+                $(campAcc).text(camp.accessibility.wheelchairaccess);
+                $("#fire").text(camp.accessibility.firestovepolicy);
+            }
+        }
+    });
 
-        // another call to grab information to fill in our parks page
-        let QueryUrlPark =
-            "https://developer.nps.gov/api/v1/parks?q=" +
-            parkTitle +
-            "&api_key=oNil6A486cp2E3fgnxetDUpIbaoAF9AJsH6ovY4l";
-        $.ajax({
-            url: QueryUrlPark,
-            method: "GET"
-        }).then(function(response) {
-            console.log(response);
-            $("#parkDirections").text(response.data[0].directionsInfo);
-            $("#weather").text(response.data[0].weatherInfo);
-            $("#description").text(response.data[0].description);
-        });
-        let QueryUrlVisitor =
-            "https://developer.nps.gov/api/v1/visitorcenters?q=" +
-            parkTitle +
-            "&api_key=Q6Emj7L4enc1tbRZpd9Xdi4cuThtYiJOEcZRL70h";
-        $.ajax({
-            url: QueryUrlVisitor,
-            method: "GET"
-        }).then(function(response) {
-            console.log(response);
-            $("#centerName").text(response.data[0].name);
-            $("#centerInfo").text(response.data[0].description);
-        });
+    // another call to grab information to fill in our parks page
+    let QueryUrlPark =
+        "https://developer.nps.gov/api/v1/parks?q=" +
+        parkTitle +
+        "&api_key=SWBKpF0W08u2fpeIxFUpYZ65c9VoiQzk3Cy5WESC";
+    $.ajax({
+        url: QueryUrlPark,
+        method: "GET"
+    }).then(function(response) {
+        console.log(response);
+        $("#parkDirections").text(response.data[0].directionsInfo);
+        $("#weather").text(response.data[0].weatherInfo);
+        $("#description").text(response.data[0].description);
+    });
+    let QueryUrlVisitor =
+        "https://developer.nps.gov/api/v1/visitorcenters?q=" +
+        parkTitle +
+        "&api_key=EEgWebQw8YDIq0fTnVceEfaK9Sc4MCvnfCVgkr0S";
+    $.ajax({
+        url: QueryUrlVisitor,
+        method: "GET"
+    }).then(function(response) {
+        console.log(response);
+        $("#centerName").text(response.data[0].name);
+        $("#centerInfo").text(response.data[0].description);
+    });
 
 
     // a randomizer to fill in all the information for the featured parks
@@ -341,7 +341,7 @@ $(document).ready(function() {
         var featuredURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
             stateCode +
-            "&q=National%20Park&api_key=eb6II6tp8uZmIMBKhf4inbZvG79mKA3h7hO7n9LQ";
+            "&q=National%20Park&api_key=EJgEs0QdPiPeHSfdQffrvaqhOaEJ2xMpFWKICetf";
 
         $.ajax({
             url: featuredURL,
@@ -380,7 +380,7 @@ $(document).ready(function() {
     let imageURL =
         "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
         parkTitle +
-        "&limit=50&apikey=414ef03d-45c7-4152-a429-00721f747310";
+        "&limit=50&apikey=38183f6c-31a9-495f-88e5-855379837d30";
     //console.log(imageURL);
 
     $.ajax({
@@ -413,12 +413,12 @@ $(document).ready(function() {
                 //console.log(urlArr);
                 // $("#img0").attr("src", "url(" + secDispURL + ")");
 
-               
+
             }
         }
     });
-    var gallery = ["gallery1.jpg","gallery2.jpg","gallery3.jpg","gallery4.jpg","gallery5.jpg","gallery6.jpg","gallery7.jpg","gallery8.jpg","gallery9.jpg","gallery10.jpg","gallery11.jpg","gallery12.jpg","gallery13.jpg","gallery14.jpg","gallery15.jpg","gallery16.jpg","gallery17.jpg"];
-    var usedNumber= [];
+    var gallery = ["gallery1.jpg", "gallery2.jpg", "gallery3.jpg", "gallery4.jpg", "gallery5.jpg", "gallery6.jpg", "gallery7.jpg", "gallery8.jpg", "gallery9.jpg", "gallery10.jpg", "gallery11.jpg", "gallery12.jpg", "gallery13.jpg", "gallery14.jpg", "gallery15.jpg", "gallery16.jpg", "gallery17.jpg"];
+    var usedNumber = [];
     var images = 0;
     while (images < 6) {
         let j = Math.floor(Math.random() * 17);
@@ -428,7 +428,7 @@ $(document).ready(function() {
         usedNumber.push(gallery[j]);
         var whereToDisplay = "#img" + images;
         console.log(gallery[j]);
-        $(whereToDisplay).attr("src", "assets/images/" + gallery[j] );
+        $(whereToDisplay).attr("src", "assets/images/" + gallery[j]);
         images++
     }
 });
