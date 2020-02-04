@@ -27,10 +27,10 @@
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="index.html"> <img src="assets/images/plogo.png" width="75" height="90" alt="">
             <img src="assets/images/parksy.png" width="100" height="45" alt=""></a>
-        <form class="form-inline">
+        <!-- <form class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Search for a park" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        </form> -->
     </nav>
 
 
@@ -64,19 +64,19 @@
 
                     <figure class="col-md-4">
                         <a href="assets/images/gregory-hayes-Ot7sISA-ivs-unsplash.jpg" data-size="1600x1067">
-                            <img alt="picture" src="assets/images/gregory-hayes-Ot7sISA-ivs-unsplash.jpg" class="img-fluid">
+                            <img alt="picture" src="assets/images/gallery1.jpg" class="img-fluid">
                         </a>
                     </figure>
 
                     <figure class="col-md-4">
                         <a href="assets/images/david-rupert-za1386W8fYU-unsplash.jpg" data-size="1600x1067">
-                            <img alt="picture" src="assets/images/david-rupert-za1386W8fYU-unsplash.jpg" class="img-fluid" />
+                            <img alt="picture" src="assets/images/gallery2.jpg" class="img-fluid" />
                         </a>
                     </figure>
 
                     <figure class="col-md-4">
                         <a href="assets/images/andrew-preble-1ABWY5nVczE-unsplash.jpg" data-size="1600x1067">
-                            <img alt="picture" src="assets/images/andrew-preble-1ABWY5nVczE-unsplash.jpg" class="img-fluid" />
+                            <img alt="picture" src="assets/images/gallery3.jpg" class="img-fluid" />
                         </a>
                     </figure>
 
@@ -123,7 +123,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <div class="card" id="hide-op">
                 <div class="card-header" id="headingTwo">
                     <h2 class="mb-0">
                         <button class="btn btn-link collapsed size" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -134,17 +134,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
                         <div id="hours">
-                            <h5>Standard Hours:</h5>
-
-                            <ul>
-
-                                <li>Sunday: Open 24 Hours</li>
-                                <li>Monday: Open 24 Hours </li>
-                                <li>Tuesday: Open 24 Hours</li>
-                                <li>Wednesday: Open 24 Hours</li>
-                                <li>Friday: Open 24 Hours</li>
-                                <li>Saturday: Open 24 Hours</li>
-                            </ul>
+                            <span id="camp-hours"></span>
                         </div>
                     </div>
                 </div>
@@ -160,65 +150,44 @@
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body">
                         <div id="weather">
-                            <ul>
-
-                                <li>May: 62 / 34</li>
-                                <li>June: 73 / 41 </li>
-                                <li>July: 78 / 46</li>
-                                <li>August: 77 / 45</li>
-                                <li>September: 70 / 38</li>
-
-                            </ul>
+                            <span id="#camp-weather"></span>
                         </div>
 
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <div class="card" id="div-acc">
                 <div class="card-header" id="headingFour">
                     <h2 class="mb-0">
                         <button class="btn btn-link collapsed size" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
-                   Fees
+                            Accessibility
                   </button>
                     </h2>
                 </div>
                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                     <div class="card-body">
-                        <div id="fees"> Camping Fee<br> Per site per night<br> Cost: $30.00
+                        <div id="fees">
+                            <span id="camp-acc"></span>
+                            <span id="fire"></span>
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card" id="hide-dir">
                     <div class="card-header" id="headingFive">
                         <h2 class="mb-0">
                             <button class="btn btn-link collapsed size" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                            Address
+                            Directions
                   </button>
                         </h2>
                     </div>
                     <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
                         <div class="card-body">
-                            <div>Aspenglen Campground<br>1000 US Highway 36, <br>Estes Park, CO<br>80517</div>
+                            <span id="camp-dir"></span>
 
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header" id="headingSix">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link collapsed size" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                    Additional Info
-                  </button>
-                        </h2>
-                    </div>
-                    <div id="collapseSix" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-                        <div class="card-body">
-                            <div id="additionalInfo">All campers are required to store all food items in food storage lockers.</div>
 
-
-                        </div>
-                    </div>
-                </div>
 
             </div>
 
@@ -234,27 +203,27 @@
             <div class="suggest">
                 <div class="row text-center" id="suggestions">
                     <div class="card-deck">
-                        <div class="card">
-                            <a href="https://team-dane-and-friends.github.io/Parksy/parkpage.html"><img src="assets/images/hendrik-cornelissen--qrcOR33ErA-unsplash.jpg" class="card-img-top" alt="..."></a>
+                        <div class="card 6 park">
+                            <img src="assets/images/hendrik-cornelissen--qrcOR33ErA-unsplash.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <h5 class="card-title" id="card-title6">Card title</h5>
+                                <p class="card-text" id="card-text6">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
-                        <div class="card">
-                            <a href="https://team-dane-and-friends.github.io/Parksy/parkpage.html"><img src="assets/images/hendrik-cornelissen--qrcOR33ErA-unsplash.jpg" class="card-img-top" alt="..."></a>
+                        <div class="card 7 park">
+                            <img src="assets/images/hendrik-cornelissen--qrcOR33ErA-unsplash.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                                <h5 class="card-title" id="card-title7">Card title</h5>
+                                <p class="card-text" id="card-text7">This card has supporting text below as a natural lead-in to additional content.</p>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
-                        <div class="card">
-                            <a href="https://team-dane-and-friends.github.io/Parksy/parkpage.html"><img src="assets/images/hendrik-cornelissen--qrcOR33ErA-unsplash.jpg" class="card-img-top" alt="..."></a>
+                        <div class="card 8 park">
+                            <img src="assets/images/hendrik-cornelissen--qrcOR33ErA-unsplash.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                                <h5 class="card-title" id="card-title8">Card title</h5>
+                                <p class="card-text" id="card-text8">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>

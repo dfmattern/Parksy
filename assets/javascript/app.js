@@ -18,12 +18,12 @@ $(document).ready(function() {
     console.log("Firebase initialized");
     //database reference as variable
     let database = firebase.database();
-    let stateCode = sessionStorage.getItem("stateCode");
     let likeCounter = 0;
     let parkName;
     let parkDescription;
     let parkImage;
     let likes;
+    let zero = 6;
     let allStateCords = [
         "61.370716,-152.404419",
         "34.969704,-92.373123",
@@ -56,7 +56,26 @@ $(document).ready(function() {
 
     console.log("variables set, ALL State Coordinates:", allStateCords);
 
-    var webCamNum = allStateCords[sessionStorage.getItem("stateNumber")];
+    function parseURLParameter(parameter) {
+        var fullURL = window.location.search.substring(1);
+        var parametersArray = fullURL.split("&");
+        for (var i = 0; i < parametersArray.length; i++) {
+            var currentParameter = parametersArray[i].split("=");
+            if (currentParameter[0] == parameter) {
+                return currentParameter[1];
+            }
+        }
+    }
+    var parkTitle = parseURLParameter("park");
+    var stateCode = parseURLParameter("state");
+    var parkNumber = parseURLParameter("num");
+    console.log("PARKTITLE: ", parkTitle);
+    if (parkTitle == null) {} else {
+        parkTitle = parkTitle.replace(/[^\w\s]/gi, " ").replace(/[0-9]/g, "");
+    }
+
+    $("#park-title").text(parkTitle);
+    var webCamNum = allStateCords[parkNumber];
     console.log("Web Cam Number", webCamNum);
 
     var webCam =
@@ -64,34 +83,14 @@ $(document).ready(function() {
         webCamNum +
         ",250?key=PZcbLAY0Dop4Gbuyc9g6EHlASwBQW9SJ";
 
-    function parseURLParameter(parameter) {
-        var fullURL = window.location.search.substring(1);
-        var parametersArray = fullURL.split('&');
-        for (var i = 0; i < parametersArray.length; i++) {
-            var currentParameter = parametersArray[i].split('=');
-            if (currentParameter[0] == parameter) {
-                return currentParameter[1];
-            }
-        }
-    }
-    var parkTitle = parseURLParameter('park');
-    console.log("PARKTITLE: ", parkTitle)
-    if (parkTitle == null) {} else {
-        parkTitle = parkTitle.replace(/[^\w\s]/gi, ' ').replace(/[0-9]/g, '');
-    }
-
-    $("#park-title").text(parkTitle);
-
     populatePage();
 
     $("#state").on("change", function() {
         codeNumber = $("#state").val();
         parkNumber = codeNumber.replace(/^\D+/g, "");
         stateCode = codeNumber.replace(/[0-9]/g, "");
-        sessionStorage.setItem("stateNumber", parkNumber);
-        sessionStorage.setItem("stateCode", stateCode);
-        stateCode = sessionStorage.getItem("stateCode");
-        window.location = "stateselect.html";
+        window.location =
+            "stateselect.html?state=" + stateCode + "&num=" + parkNumber;
         //console.log(stateCode);
     });
     database.ref().on("value", function(snapshot) {
@@ -104,13 +103,19 @@ $(document).ready(function() {
     });
 
     $(".park").on("click", function() {
-        parkTitle = $(this).attr("id")
-        window.location = "parkpage.html?park=" + parkTitle;
+        parkTitle = $(this).attr("id");
+        window.location =
+            "parkpage.html?state=" +
+            stateCode +
+            "&num=" +
+            parkNumber +
+            "&park=" +
+            parkTitle;
     });
 
     $("#link-camp-info").on("click", function() {
         window.location = "campgroundpage.html?park=" + parkTitle;
-    })
+    });
 
     //like function
     $("#like-btn").on("click", function(event) {
@@ -229,6 +234,8 @@ $(document).ready(function() {
             parkTitle +
             "&api_key=e1t00p6aAfQUWf7s5twlc8UndB7wbJS55ctxLGpe";
 
+
+        // Caution and information alerts 
         $.ajax({
             url: alertURL,
             method: "GET"
@@ -250,6 +257,8 @@ $(document).ready(function() {
             }
         });
 
+        //Campground call by park 
+
         let campURL =
             "https://developer.nps.gov/api/v1/campgrounds?q=" +
             parkTitle +
@@ -261,7 +270,7 @@ $(document).ready(function() {
         }).done(function(campResponse) {
             let campResults = campResponse.data;
 
-            console.log("CAMPURL: ", campURL)
+            console.log("CAMPURL: ", campURL);
             console.log("campgrounds API", campResponse);
             let camp = campResults[0];
 
@@ -275,12 +284,37 @@ $(document).ready(function() {
                 let campPageName = "#camp-title";
                 let campDesc = "#description";
                 let campFeatures = "#sites";
+                let campHours = "#camp-hours";
+                let campWeather = "#camp-weather";
+                let campAcc = "#camp-acc";
+                let campDir = "#camp-dir";
 
                 $(campName).text(camp.name);
                 $(campInfo).text(camp.description);
                 $(campDesc).text(camp.description);
                 $(campPageName).text(camp.name);
-                // $(campFeatures).text(camp.data[0].)
+                $(campFeatures).text(camp.campsites.totalsites);
+                $(campWeather).text(camp.weatheroverview);
+
+                if (camp.directionsoverview == "") {
+                    $("#hide-dir").hide();
+                } else {
+                    $(campDir).text(camp.directionsoverview);
+                }
+                if (camp.regulationsoverview == "") {
+                    $("#hide-op").hide();
+                } else {
+                    $(campHours).text(camp.regulationsoverview);
+                }
+                if (
+                    camp.accessibility.wheelchairaccess == "" &&
+                    camp.accessibility.firestovepolicy == ""
+                ) {
+                    $("#div-acc").hide();
+                } else {
+                    $(campAcc).text(camp.accessibility.wheelchairaccess);
+                    $("#fire").text(camp.accessibility.firestovepolicy);
+                }
             }
         });
 
@@ -310,11 +344,28 @@ $(document).ready(function() {
             $("#centerInfo").text(response.data[0].description);
         });
     }
+    var numberArray = ["4", "0", "3", "8", "15"];
+    var stateArray = ["CO", "AK", "CA", "KY", "NM"];
+    var selectedStates = [];
+    var important = 6;
+    //   while (important < 9) {
+    //     let j = Math.floor(Math.random() * 4);
+    //     if (selectedStates.includes((stateArray[j]))) {
+    //       continue;
+    //     }
+    //     selectedStates.push(stateArray[j]);
+    //     ++important;
+    //   }
 
-    var stateArray = ["CO", "AK", "CA", "NY", "NM"];
-    for (let i = 6; i < 9; i++) {
+    //   console.log(selectedStates)
+    while (important < 9) {
         let j = Math.floor(Math.random() * 4);
-        let stateCode = stateArray[j];
+        stateCode = stateArray[j];
+        parkNumber = numberArray[j];
+        if (selectedStates.includes(stateArray[j])) {
+            continue;
+        }
+        selectedStates.push(stateArray[j]);
 
         var featuredURL =
             "https://developer.nps.gov/api/v1/parks?stateCode=" +
@@ -325,6 +376,7 @@ $(document).ready(function() {
             url: featuredURL,
             method: "GET"
         }).done(function(response) {
+            //console.log(important);
             //console.log(response);
 
             let results = response.data;
@@ -340,20 +392,22 @@ $(document).ready(function() {
             let cardText = featuredPark.description;
             //console.log(cardText);
 
-            let randomCard = "#card-title" + i;
-            // console.log(randomCard)
-            let randomText = "#card-text" + i;
-            let number = "." + i;
+            let randomCard = "#card-title" + zero;
+            console.log(randomCard)
+            let randomText = "#card-text" + zero;
+            let number = "." + zero;
             //console.log(randomText)
             $(randomCard).text(cardTitle);
             $(randomText).text(cardText);
             $(number).attr("id", featuredPark.fullName);
+            zero++
         });
+        ++important;
     }
     let imageURL =
         "https://cors-anywhere.herokuapp.com/ridb.recreation.gov/api/v1/media?query=" +
         parkTitle +
-        "&limit=50&apikey=27b8c6d8-739a-4df3-a008-21aa585669b9";
+        "&limit=50&apikey=414ef03d-45c7-4152-a429-00721f747310";
     //console.log(imageURL);
 
     $.ajax({
@@ -366,33 +420,28 @@ $(document).ready(function() {
         for (let i = 0; i < response.RECDATA.length; i++) {
             if (response.RECDATA[i].IsPrimary) {
                 primaryImage = response.RECDATA[i];
-                console.log(primaryImage);
+                //console.log(primaryImage);
                 displayImageURL = primaryImage.URL;
                 console.log(displayImageURL);
                 // $('.displayImage').attr('src',displayImageURL)
 
-                $('#park-jumbo').css('background', "url(" + displayImageURL + ")").css("background-repeat", "no-repeat").css("background-size", "cover");
-
-            }
-            else { (response.RECDATA[i].imageURL)
+                $("#park-jumbo")
+                    .css("background", "url(" + displayImageURL + ")")
+                    .css("background-repeat", "no-repeat")
+                    .css("background-size", "cover");
+            } else {
+                response.RECDATA[i].IsGallery;
                 secondaryImage = response.RECDATA[i];
-                //console.log(secondaryImage);
-                imageURL = secondaryImage.URL;
-                //console.log(imageURL);
-                let secondaryImageArr = [];
-                secondaryImageArr.push(imageURL);
-                console.log(secondaryImageArr);
-                let 
-                
+                console.log(secondaryImage);
+                secDispURL = secondaryImage.URL;
+                //console.log(secDispURL);
+                //urlArr= [];
+                // urlArr.push(secDispURL);
+                //console.log(urlArr);
+                $("#img0").css("background", "url(" + secDispURL + ")");
 
-            
-                
+                //$("#img0").css("background", "url(" + randomParkImage[i] + ")");
             }
-        
         }
-
-
     });
-
-
 });
